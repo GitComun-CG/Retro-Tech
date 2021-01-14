@@ -1,0 +1,11 @@
+RUTAS:
+
+        ---------->   PUBLICACIONES   <----------
+
+DONE - GET - /comprar   --->   lista con todas las categorías
+DONE - GET - /comprar/:idCategoria   --->   lista con los anuncios dentro de una categoría en concreto
+- GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
+
+- POST - /subir   --->   crea un anuncio
+- PUT -  /edit/:idAnuncio   --->   edita un anuncio
+- DELETE - /:idAnuncio   --->   borra un anuncio

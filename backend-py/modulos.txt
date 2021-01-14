@@ -1,0 +1,11 @@
+
+- npm init -y
+- npm install eslint -D
+- npm install nodemon -D
+- npm install prettier -D
+- npx eslint --init
+- npm install express
+- npm install dotenv
+- npm install body-parser 
+- npm install morgan
+- npm install mysql2
