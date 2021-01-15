@@ -18,6 +18,7 @@ const {
   crearAnuncio,
   editarAnuncio,
   mostrarAnuncio,
+  borrarAnuncio,
 } = require("./controladores/publicaciones");
 
 const { PORT } = process.env;
@@ -38,16 +39,17 @@ app.get("/comprar", listarCategorias);
 // 👍️ GET - /comprar/:idCategoria  : devuelve los anuncios relacionados con una categoría
 app.get("/comprar/:idCategoria", listarAnuncios);
 
-// ⭕️ 🆘️ GET - /comprar/:idAnuncio : muestra un anuncio.
-// comprar/:idCategoria/:idAnuncio", mostrarAnuncio);
+// 👍️ 🆘️🆘️🆘️🆘️🆘️ GET - comprar/:idCategoria/:idAnuncio : muestra un anuncio
 app.get("/comprar/:idCategoria/:idAnuncio", mostrarAnuncio);
 
 // 👍️ POST - /subir  : para crear un anuncio
 app.post("/subir", crearAnuncio);
 
-// ⭕️ PUT - /edit/:idAnuncio
+// 👍️ PUT - /edit/:idAnuncio : para editar un anuncio
 app.put("/edit/:idAnuncio", editarAnuncio);
 
+// DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio
+app.delete("/mis-anuncios/:idAnuncio", borrarAnuncio);
 // Crear middlewar de error:
 app.use((error, req, res, next) => {
   console.error(error);

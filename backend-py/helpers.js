@@ -1,15 +1,17 @@
 // Aquí creamos diferentes funciones para usar en determinadas cosas
+// Carga de los módulos:
 
-// Para el cambio de formato de fecha:
+// - para el formato de la fecha:
 const { format } = require("date-fns");
 
-// Para editar fotos:
+// - para editar fotos:
 const sharp = require("sharp");
-// Para generar nombres únicos para las fotos subidas:
+
+// - para generar nombres únicos para las fotos subidas:
 const uuid = require("uuid");
 
-// Para asegurar que existe un directorio:
-const { ensureDir } = require("fs-extra");
+// - para asegurar que existe un directorio:
+const { ensureDir, unlink } = require("fs-extra");
 
 const path = require("path");
 
@@ -18,12 +20,12 @@ const { UPLOADS_DIRECTORY } = process.env;
 
 const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
 
+// *******  PARA EL CAMBIO DE FORMATO DE FECHA:  *******
 function formatDateToDB(dateObject) {
   return format(dateObject, "yyyy-MM-dd HH:mm:ss");
 }
 
-//
-
+// *******  PARA LA SUBIDA DE FOTOS:  *******
 async function guardarImagen(imageData) {
   // Asegurarse de que el directorio de subida de imágenes exista con la función ensureDir de 'fs-extra':
   await ensureDir(uploadsDir);
@@ -50,7 +52,15 @@ async function guardarImagen(imageData) {
   return nombreImagenGuardada;
 }
 
+// *******  PARA BORRAR FOTOS:  *******
+async function borrarFoto(foto) {
+  const fotoPath = path.join(uploadsDir, foto);
+
+  await unlink(fotoPath);
+}
+
 module.exports = {
   formatDateToDB,
   guardarImagen,
+  borrarFoto,
 };
