@@ -27,6 +27,7 @@ async function main() {
     await connection.query("DROP TABLE IF EXISTS anuncios");
     await connection.query("DROP TABLE IF EXISTS categorias");
     await connection.query("DROP TABLE IF EXISTS usuarios");
+    await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
     // (DUDA) Para que funcionase he tenido que mover las tablas "anuncios" y "usuarios" de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
 
     console.log("Tablas borradas.");
@@ -78,6 +79,16 @@ async function main() {
                     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
             );
         `);
+
+    // Creamos la tabla "fotos_anuncio":
+    await connection.query(`
+    CREATE TABLE fotos_anuncio (
+        idFotoAnuncio INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        fechaPublicacion DATETIME NOT NULL,
+        foto VARCHAR(500) NOT NULL,
+        idAnuncio INT NOT NULL
+        );
+    `);
 
     // Creamos la tabla "reserva":
     // (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)

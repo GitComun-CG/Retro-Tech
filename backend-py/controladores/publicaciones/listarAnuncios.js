@@ -9,7 +9,7 @@ const listarAnuncios = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    // DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero FUNCIONA!!!!!!!!!!!)
+    // DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero funcionar, FUNCIONA!!!!!!!!!!!)
     const { idCategoria } = req.params;
 
     const { search } = req.query;
@@ -20,7 +20,7 @@ const listarAnuncios = async (req, res, next) => {
     if (search) {
       [results] = await connection.query(
         `
-        SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
+        SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
         WHERE anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ?;`,
         [`%${search}%`, `%${search}%`]
@@ -28,7 +28,7 @@ const listarAnuncios = async (req, res, next) => {
     } else {
       [results] = await connection.query(
         `
-        SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
+        SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
          WHERE anuncios.idCategoria = ?`,
         [idCategoria]

@@ -6,6 +6,10 @@ DONE - GET - /comprar   --->   lista con todas las categorías
 DONE - GET - /comprar/:idCategoria   --->   lista con los anuncios dentro de una categoría en concreto
 - GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
 
-- POST - /subir   --->   crea un anuncio
+DONE - POST - /subir   --->   crea un anuncio
+- POST - /subir/:idAnuncio/imagen   ---> añadir una imagen a un anuncio
+- DELETE - /subir/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
+
+- POST - /comprar/:idAnuncio/guardado   --->   guardar un anuncio
 - PUT -  /edit/:idAnuncio   --->   edita un anuncio
 - DELETE - /:idAnuncio   --->   borra un anuncio

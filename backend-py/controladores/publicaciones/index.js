@@ -2,5 +2,10 @@
 
 const listarCategorias = require("./listarCategorias");
 const listarAnuncios = require("./listarAnuncios");
+const crearAnuncio = require("./crearAnuncio");
 
-module.exports = { listarCategorias, listarAnuncios };
+module.exports = {
+  listarCategorias,
+  listarAnuncios,
+  crearAnuncio,
+};
