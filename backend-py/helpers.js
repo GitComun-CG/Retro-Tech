@@ -12,7 +12,11 @@ const uuid = require("uuid");
 const { ensureDir } = require("fs-extra");
 
 const path = require("path");
-const { image } = require("faker");
+
+// imageData es el objeto con información de la imagen.
+const { UPLOADS_DIRECTORY } = process.env;
+
+const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
 
 function formatDateToDB(dateObject) {
   return format(dateObject, "yyyy-MM-dd HH:mm:ss");
@@ -21,10 +25,6 @@ function formatDateToDB(dateObject) {
 //
 
 async function guardarImagen(imageData) {
-  // imageData es el objeto con información de la imagen.
-  const { UPLOADS_DIRECTORY } = process.env;
-
-  const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
   // Asegurarse de que el directorio de subida de imágenes exista con la función ensureDir de 'fs-extra':
   await ensureDir(uploadsDir);
 

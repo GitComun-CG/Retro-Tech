@@ -16,6 +16,8 @@ const {
   listarCategorias,
   listarAnuncios,
   crearAnuncio,
+  editarAnuncio,
+  mostrarAnuncio,
 } = require("./controladores/publicaciones");
 
 const { PORT } = process.env;
@@ -30,23 +32,28 @@ app.use(fileUpload());
 
 // RUTAS DE LA API:
 
-// GET - /comprar  : devuelve los elementos de la tabla 'categorias'
+// 👍️ GET - /comprar  : devuelve los elementos de la tabla 'categorias'
 app.get("/comprar", listarCategorias);
 
-// GET - /comprar/:idCategoria  : devuelve los anuncios relacionados con una categoría
+// 👍️ GET - /comprar/:idCategoria  : devuelve los anuncios relacionados con una categoría
 app.get("/comprar/:idCategoria", listarAnuncios);
 
-// GET - /comprar/:idAnuncio : muestra un anuncio.
+// ⭕️ 🆘️ GET - /comprar/:idAnuncio : muestra un anuncio.
 // comprar/:idCategoria/:idAnuncio", mostrarAnuncio);
+app.get("/comprar/:idCategoria/:idAnuncio", mostrarAnuncio);
 
-// POST - /subir  : para crear un anuncio
+// 👍️ POST - /subir  : para crear un anuncio
 app.post("/subir", crearAnuncio);
+
+// ⭕️ PUT - /edit/:idAnuncio
+app.put("/edit/:idAnuncio", editarAnuncio);
+
 // Crear middlewar de error:
 app.use((error, req, res, next) => {
   console.error(error);
   res.status(error.httpStatus || 500).send({
     status: "error",
-    message: "error.message",
+    message: error.message,
   });
 });
 

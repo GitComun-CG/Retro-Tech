@@ -28,7 +28,7 @@ async function main() {
     await connection.query("DROP TABLE IF EXISTS categorias");
     await connection.query("DROP TABLE IF EXISTS usuarios");
     await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
-    // (DUDA) Para que funcionase he tenido que mover las tablas "anuncios" y "usuarios" de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
+    // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas "anuncios" y "usuarios" de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
 
     console.log("Tablas borradas.");
 
@@ -46,7 +46,7 @@ async function main() {
             ciudad VARCHAR(200) NOT NULL,
             pais VARCHAR(200) NOT NULL,
             codigoPostal INT NOT NULL,
-            fechaNacimiento DATE,
+            fechaNacimiento DATE NOT NULL,
             email VARCHAR(100),
                 -- para que no se pueda repetir el email
                 CONSTRAINT usuarios_email_uq2 UNIQUE(email),
@@ -71,8 +71,7 @@ async function main() {
             precio DECIMAL(8, 2) DEFAULT 0.0 NOT NULL,
             provincia VARCHAR(300) NOT NULL,
             localidad VARCHAR(300) NOT NULL,
-            idCategoria INT UNSIGNED NOT NULL,
-                
+            idCategoria INT UNSIGNED NOT NULL,    
             foto VARCHAR(500), 
             idUsuario INT UNSIGNED NOT NULL,
                 CONSTRAINT anuncios_idUsuario_fk1
@@ -91,7 +90,7 @@ async function main() {
     `);
 
     // Creamos la tabla "reserva":
-    // (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)
+    // 🆘️ (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)
     await connection.query(`
         CREATE TABLE reserva ( 
             idReserva INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -147,14 +146,17 @@ async function main() {
       const ciudad = faker.address.city();
       const pais = faker.address.country();
       const cp = random(10000, 20000);
+      const fechaNacimiento = faker.date.between(1950, 2003);
       const email = faker.internet.email();
       const contraseña = faker.internet.password();
 
       await connection.query(`
-        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, email, contraseña)
+        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña)
             VALUES ("${formatDateToDB(
               now
-            )}", "${userName}", "${nombre}", "${apellidos}", "${ciudad}", "${pais}", "${cp}", "${email}", "${contraseña}")
+            )}", "${userName}", "${nombre}", "${apellidos}", "${ciudad}", "${pais}", "${cp}","${formatDateToDB(
+        fechaNacimiento
+      )}", "${email}", "${contraseña}")
         `);
     }
     console.log("Datos de prueba introducidos en la tabla 'usuarios'.");
@@ -168,9 +170,9 @@ async function main() {
       const precio = random(10, 10000);
       const provincia = faker.address.state();
       const localidad = faker.address.city();
-      // --- quiero que me liste las categorías que yo puse en la base de datos, no unas random. ¿Cómo se hace eso? ---
+      // 🆘️ --- Si quiero que en vez de idCategoria aparezca nombreCategoria (con el nombre completo) ¿Cómo se hace eso? ---
       const idCategoria = random(1, 5);
-      // el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
+      // 🆘️ el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
       const idUsuario = random(1, 100);
 
       await connection.query(`
@@ -191,8 +193,8 @@ async function main() {
             INSERT INTO categorias ( nombre)
                 VALUES ( "${nombres}")`);
     }
-    // --- solo me sale la categoría "Consolas y Videojuegos" en la base de datos. ¿Cómo se hace para que me las ponga todas? ---
-    // Lo he arreglado con la variable 'nombres' y poniendo que son 6 categorias ( 1 de más ) ya que los arrays empiezan en 0, pero creo que no es así. PREGUNTAR POR SI ACASO.
+    // 🆘️ --- solo me sale la categoría "Consolas y Videojuegos" en la base de datos. ¿Cómo se hace para que me las ponga todas? ---
+    // 🆘️ Lo he arreglado con la variable 'nombres' y poniendo que son 6 categorias ( 1 de más ) ya que los arrays empiezan en 0, pero creo que no es así. PREGUNTAR POR SI ACASO.
     console.log("Datos de prueba introducidos en la tabla 'categorias'.");
 
     // DATOS DE PRUEBA TABLA "reserva":

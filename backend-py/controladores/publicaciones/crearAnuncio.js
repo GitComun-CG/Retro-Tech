@@ -1,3 +1,6 @@
+// SCRIPT PARA CREAR UN ANUNCIO NUEVO Y PARA SUBIR UNA IMAGEN
+// - GET - /subir
+
 const getDB = require("../../db");
 const { formatDateToDB, guardarImagen } = require("../../helpers");
 const { random } = require("lodash");
@@ -19,12 +22,12 @@ const crearAnuncio = async (req, res, next) => {
 
     const now = new Date();
 
-    const idUsuario = random(1, 100);
     const idCategoria = random(1, 5);
+    const idUsuario = random(1, 100);
 
     const [result] = await connection.query(
       `
-        INSERT INTO anuncios (fechaPublicacion, titulo, descripcion, precio, provincia, localidad, idCategoria, idUsuario)
+        INSERT INTO anuncios (fechaPublicacion, titulo, descripcion, precio, provincia, localidad, idUsuario, idCategoria)
         VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         formatDateToDB(now),
@@ -41,16 +44,15 @@ const crearAnuncio = async (req, res, next) => {
     const { insertId } = result;
 
     // Procesar las imágenes:
+    const images = [];
     // Con .slice (0,5) limitamos la cantidad de fotos a 5.
     // Si hay imágenes...
     if (req.files && Object.keys(req.files).length > 0) {
-      for (const [imageName, imageData] of Object.entries(req.files).slice(
-        0,
-        5
-      )) {
+      for (const imageData of Object.values(req.files).slice(0, 5)) {
         // Guardar la imágen con el nombre del fichero:
         const imageFile = await guardarImagen(imageData);
 
+        images.push(imageFile);
         // Meter una nueva entrada en la tabla 'fotos_anuncio':
         await connection.query(
           `
@@ -74,7 +76,7 @@ const crearAnuncio = async (req, res, next) => {
         localidad,
         idUsuario,
         idCategoria,
-        foto: null,
+        images,
       },
     });
   } catch (error) {

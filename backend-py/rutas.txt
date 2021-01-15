@@ -2,14 +2,14 @@ RUTAS:
 
         ---------->   PUBLICACIONES   <----------
 
-DONE - GET - /comprar   --->   lista con todas las categorías
-DONE - GET - /comprar/:idCategoria   --->   lista con los anuncios dentro de una categoría en concreto
-- GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
+👍️ - GET - /comprar   --->   lista con todas las categorías
+👍 - GET - /comprar/:idCategoria   --->   lista con los anuncios dentro de una categoría en concreto
+👍️ - GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
 
-DONE - POST - /subir   --->   crea un anuncio
-- POST - /subir/:idAnuncio/imagen   ---> añadir una imagen a un anuncio
-- DELETE - /subir/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
+👍️ - POST - /subir   --->   crea un anuncio
+👍️ - POST - /subir/:idAnuncio/imagen   ---> añadir una imagen a un anuncio
+⭕️ - DELETE - /subir/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
 
-- POST - /comprar/:idAnuncio/guardado   --->   guardar un anuncio
-- PUT -  /edit/:idAnuncio   --->   edita un anuncio
-- DELETE - /:idAnuncio   --->   borra un anuncio
+⭕️ - POST - /comprar/:idAnuncio/guardado   --->   guardar un anuncio
+👍️ - PUT -  /edit/:idAnuncio   --->   edita un anuncio (para editar las fotos utilizamos otro método)
+⭕️ - DELETE - /mis-anuncios/:idAnuncio   --->   borra un anuncio
