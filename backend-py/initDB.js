@@ -24,11 +24,11 @@ async function main() {
     await connection.query("DROP TABLE IF EXISTS guardados");
     await connection.query("DROP TABLE IF EXISTS chat");
 
+    await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
     await connection.query("DROP TABLE IF EXISTS anuncios");
     await connection.query("DROP TABLE IF EXISTS categorias");
     await connection.query("DROP TABLE IF EXISTS usuarios");
-    await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
-    // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas "anuncios" y "usuarios" de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
+    // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
 
     console.log("Tablas borradas.");
 
@@ -85,7 +85,9 @@ async function main() {
         idFotoAnuncio INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         fechaPublicacion DATETIME NOT NULL,
         foto VARCHAR(500) NOT NULL,
-        idAnuncio INT NOT NULL
+        idAnuncio INT UNSIGNED NOT NULL,
+          CONSTRAINT fotos_anuncio_idAnuncio_fk2
+            FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio)
         );
     `);
 
@@ -95,11 +97,11 @@ async function main() {
         CREATE TABLE reserva ( 
             idReserva INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idUsuario_fk2
+                CONSTRAINT reserva_idUsuario_fk3
                     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
             idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idAnuncio_fk2
-                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio),
+                CONSTRAINT reserva_idAnuncio_fk3
+                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
             reservado BOOLEAN DEFAULT FALSE
             );
         `);
@@ -112,8 +114,8 @@ async function main() {
                 CONSTRAINT guardados_idUsuario_fk3
                     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
             idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idAnuncio_fk3
-                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio),
+                CONSTRAINT reserva_idAnuncio_fk4 
+                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
             fechaGuardado DATETIME NOT NULL
             );
         `);

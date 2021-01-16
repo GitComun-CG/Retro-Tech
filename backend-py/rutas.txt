@@ -13,3 +13,4 @@ RUTAS:
 ⭕️ - POST - /comprar/:idAnuncio/guardado   --->   guardar un anuncio
 👍️ - PUT -  /edit/:idAnuncio   --->   edita un anuncio (para editar las fotos utilizamos otro método)
 👍️ - DELETE - /mis-anuncios/:idAnuncio   --->   borra un anuncio
+
