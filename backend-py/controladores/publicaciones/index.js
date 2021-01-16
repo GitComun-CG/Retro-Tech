@@ -6,6 +6,7 @@ const crearAnuncio = require("./crearAnuncio");
 const editarAnuncio = require("./editarAnuncio");
 const mostrarAnuncio = require("./mostrarAnuncio");
 const borrarAnuncio = require("./borrarAnuncio");
+const añadirImagen = require("./añadirImagen");
 
 module.exports = {
   listarCategorias,
@@ -14,4 +15,5 @@ module.exports = {
   editarAnuncio,
   mostrarAnuncio,
   borrarAnuncio,
+  añadirImagen,
 };

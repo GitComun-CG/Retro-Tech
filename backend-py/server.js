@@ -19,7 +19,11 @@ const {
   editarAnuncio,
   mostrarAnuncio,
   borrarAnuncio,
+  añadirImagen,
 } = require("./controladores/publicaciones");
+
+// Middlewares:
+const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
 
 const { PORT } = process.env;
 
@@ -39,17 +43,23 @@ app.get("/comprar", listarCategorias);
 // 👍️ GET - /comprar/:idCategoria  : devuelve los anuncios relacionados con una categoría
 app.get("/comprar/:idCategoria", listarAnuncios);
 
-// 👍️ 🆘️🆘️🆘️🆘️🆘️ GET - comprar/:idCategoria/:idAnuncio : muestra un anuncio
-app.get("/comprar/:idCategoria/:idAnuncio", mostrarAnuncio);
+// 👍️ GET - comprar/:idCategoria/:idAnuncio : muestra un anuncio
+app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 
 // 👍️ POST - /subir  : para crear un anuncio
 app.post("/subir", crearAnuncio);
 
 // 👍️ PUT - /edit/:idAnuncio : para editar un anuncio
-app.put("/edit/:idAnuncio", editarAnuncio);
+app.put("/edit/:idAnuncio", elAnuncioExiste, editarAnuncio);
 
-// DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio
-app.delete("/mis-anuncios/:idAnuncio", borrarAnuncio);
+// 👍️ DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio
+app.delete("/mis-anuncios/:idAnuncio", elAnuncioExiste, borrarAnuncio);
+
+// ⭕️ Guardar anuncios (?)
+
+// 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes
+app.post("/mis-anuncios/:idAnuncio/imagenes", elAnuncioExiste, añadirImagen);
+
 // Crear middlewar de error:
 app.use((error, req, res, next) => {
   console.error(error);

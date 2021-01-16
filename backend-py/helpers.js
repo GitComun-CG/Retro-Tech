@@ -53,14 +53,14 @@ async function guardarImagen(imageData) {
 }
 
 // *******  PARA BORRAR FOTOS:  *******
-async function borrarFoto(foto) {
-  const fotoPath = path.join(uploadsDir, foto);
+async function borrarImagen(imagen) {
+  const imagenPath = path.join(uploadsDir, imagen);
 
-  await unlink(fotoPath);
+  await unlink(imagenPath);
 }
 
 module.exports = {
   formatDateToDB,
   guardarImagen,
-  borrarFoto,
+  borrarImagen,
 };

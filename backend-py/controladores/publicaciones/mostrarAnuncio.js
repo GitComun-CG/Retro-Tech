@@ -1,7 +1,7 @@
 //  SCRIPT PARA MOSTRAR UN ANUNCIO CON TODA SU INFORMACIÓN
 // - GET - /comprar/:idCategoria/:idAnuncio
 
-// 🆘️ Funciona pero mal. Al poner en Postman http://localhost:3002/comprar/2/10 (por ejemplo) me lista sólo el anuncio con id = 10, pero pasa olímpicamente de la categoría :(
+// 🆘️ Funciona pero mal. Al poner en Postman http://localhost:3002/comprar/2/10 (por ejemplo) me lista sólo el anuncio con idAnuncio = 10, pero pasa olímpicamente de la categoría :(
 
 const getDB = require("../../db");
 
@@ -22,12 +22,6 @@ const mostrarAnuncio = async (req, res, next) => {
     );
 
     const single = result;
-
-    if (single.idAnuncio === null || single.idCategoria === null) {
-      const error = new Error("El elemento no existe.");
-      error.httpStatus = 404;
-      throw error;
-    }
 
     // 🆘️🆘️🆘️ FALTA ESTO   ----->   Para mostrar las fotos del anuncio:
 

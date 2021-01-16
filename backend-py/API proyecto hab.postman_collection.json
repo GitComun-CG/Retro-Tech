@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "1d854867-2cd2-4014-ad23-7881073db1cb",
+		"name": "API proyecto hab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Categorías",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/comprar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comprar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar de anuncios de una categoría",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/comprar/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"comprar",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar anuncios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/comprar/2?search=sega",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comprar",
+						"2"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "sega"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Muestra un anuncio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/comprar/3/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"comprar",
+						"3",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Anuncio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "titulo",
+							"value": "Sega Mega Drive",
+							"type": "text"
+						},
+						{
+							"key": "descripcion",
+							"value": "Sega Mega Drive en perfecto estado",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "175",
+							"type": "text"
+						},
+						{
+							"key": "provincia",
+							"value": "A Coruña",
+							"type": "text"
+						},
+						{
+							"key": "localidad",
+							"value": "Sada",
+							"type": "text"
+						},
+						{
+							"key": "foto1",
+							"type": "file",
+							"src": "/home/guille/Descargas/foto-sm1.jpg"
+						},
+						{
+							"key": "foto2",
+							"type": "file",
+							"src": "/home/guille/Descargas/foto-sm2.jpg"
+						},
+						{
+							"key": "foto3",
+							"type": "file",
+							"src": "/home/guille/Descargas/foto-sm3.jpg"
+						},
+						{
+							"key": "foto4",
+							"type": "file",
+							"src": "/home/guille/Descargas/foto-sm4.jpg",
+							"disabled": true
+						},
+						{
+							"key": "foto5",
+							"type": "file",
+							"src": "/home/guille/Descargas/foto-sm5.jpg",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/subir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"subir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Anuncio",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fechaPublicacion\": \"2019-01-15T19:42:02.000Z\",\n  \"titulo\":  \"Mando NES\",\n  \"descripcion\": \"Mando NES en perfecto estado. Lo vendo por no utilizarlo.\",\n  \"precio\": \"17,40\",\n  \"provincia\": \"Lugo\",\n  \"localidad\": \"Xove\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/edit/170",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"edit",
+						"170"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Anuncio",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/mis-anuncios/37",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"mis-anuncios",
+						"37"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Añadir foto a un anuncio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

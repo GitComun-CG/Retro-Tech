@@ -7,10 +7,10 @@ RUTAS:
 👍️ - GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
 
 👍️ - POST - /subir   --->   crea un anuncio con fotos y todos los campos
-⭕️ - POST - /subir/:idAnuncio/imagen   --->  añadir una imagen a un anuncio
-⭕️ - DELETE - /subir/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
+⭕️ - POST - /mis-anuncio/:idAnuncio/imagenes   --->  añadir una imagen a un anuncio
+⭕️ - DELETE - /mis-anuncios/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
 
-⭕️ - POST - /comprar/:idAnuncio/guardado   --->   guardar un anuncio
+⭕️ - POST - /comprar/:idAnuncio/guardadoss   --->   lista de anuncio guardados
 👍️ - PUT -  /edit/:idAnuncio   --->   edita un anuncio (para editar las fotos utilizamos otro método)
-👍️ - DELETE - /mis-anuncios/:idAnuncio   --->   borra un anuncio
+👍️ - DELETE - /mis-anuncios/:idAnuncio   --->   borra un anuncio y su contenido (fotos, etc)
 

@@ -10,19 +10,7 @@ const editarAnuncio = async (req, res, next) => {
     connection = await getDB();
 
     const { idAnuncio } = req.params;
-    // Comprobar que existe el anuncio con ese id:
-    const [current] = await connection.query(
-      `
-        SELECT idAnuncio FROM anuncios WHERE idAnuncio=?`,
-      [idAnuncio]
-    );
 
-    // Si no existe, devolver un 404:
-    if (current.length === 0) {
-      const error = new Error("La entrada seleccionada no existe.");
-      error.httpStatus = 404;
-      throw error;
-    }
     // Comprobar que los datos mínimos vienen en el body:
     // 🆘️ ¿Debería llevar también los campos idCategoria e idUsuario?
     const {
