@@ -2,15 +2,14 @@ RUTAS:
 
         ---------->   PUBLICACIONES   <----------
 
-👍️ - GET - /comprar   --->   lista con todas las categorías
-👍 - GET - /comprar/:idCategoria   --->   lista con los anuncios dentro de una categoría en concreto
-👍️ - GET - /comprar/:idCategoria/:idAnuncio   --->   muestra un anuncio seleccionado
+👍️ - GET - /comprar   (listarCategorias.js) --->   lista con todas las categorías
+👍 - GET - /comprar/:idCategoria   (listarAnuncios.js) --->   lista con los anuncios dentro de una categoría en concreto
+👍️🆘️ - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js) --->   muestra un anuncio seleccionado
 
-👍️ - POST - /subir   --->   crea un anuncio con fotos y todos los campos
-⭕️ - POST - /mis-anuncio/:idAnuncio/imagenes   --->  añadir una imagen a un anuncio
-⭕️ - DELETE - /mis-anuncios/:idAnuncio/imagen/:idImagen   --->   borrar una imagen de un anuncio
+👍️ - POST - /subir   (crearAnuncio.js) --->   crea un anuncio con fotos y todos los campos
+👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js) --->  añadir una imagen a un anuncio
+👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js) --->   borrar una imagen de un anuncio
 
-⭕️ - POST - /comprar/:idAnuncio/guardadoss   --->   lista de anuncio guardados
-👍️ - PUT -  /edit/:idAnuncio   --->   edita un anuncio (para editar las fotos utilizamos otro método)
-👍️ - DELETE - /mis-anuncios/:idAnuncio   --->   borra un anuncio y su contenido (fotos, etc)
-
+👍️ - PUT -  /edit/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio 
+👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js) --->   borra un anuncio y su contenido (fotos, etc)
+⭕️ - POST - /mis-anuncios/guardados    --->   lista de anuncios guardados

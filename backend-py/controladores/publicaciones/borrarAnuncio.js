@@ -1,3 +1,7 @@
+// SCRIPT PARA BORRAR UN ANUNCIO
+// - DELETE - /mis-anuncios/:idAnuncio
+// Funciona al darle dos veces pero a la primera salta un error con el path: "The \"path\" argument must be of type string. Received undefined"
+
 const getDB = require("../../db");
 const { borrarImagen } = require("../../helpers");
 

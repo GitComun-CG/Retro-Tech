@@ -81,15 +81,15 @@ async function main() {
 
     // Creamos la tabla "fotos_anuncio":
     await connection.query(`
-    CREATE TABLE fotos_anuncio (
-        idFotoAnuncio INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        fechaPublicacion DATETIME NOT NULL,
-        foto VARCHAR(500) NOT NULL,
-        idAnuncio INT UNSIGNED NOT NULL,
-          CONSTRAINT fotos_anuncio_idAnuncio_fk2
-            FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio)
-        );
-    `);
+      CREATE TABLE fotos_anuncio (
+          idFotoAnuncio INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+          fechaPublicacion DATETIME NOT NULL,
+          foto VARCHAR(500) NOT NULL,
+          idAnuncio INT UNSIGNED NOT NULL,
+            CONSTRAINT fotos_anuncio_idAnuncio_fk2
+              FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio)
+          );
+      `);
 
     // Creamos la tabla "reserva":
     // 🆘️ (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)

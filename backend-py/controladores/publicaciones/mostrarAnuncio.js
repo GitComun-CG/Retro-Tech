@@ -2,7 +2,7 @@
 // - GET - /comprar/:idCategoria/:idAnuncio
 
 // 🆘️ Funciona pero mal. Al poner en Postman http://localhost:3002/comprar/2/10 (por ejemplo) me lista sólo el anuncio con idAnuncio = 10, pero pasa olímpicamente de la categoría :(
-
+// 🆘️ Tampoco muestra las fotos de ese anuncio en la lista de anuncios.
 const getDB = require("../../db");
 
 const mostrarAnuncio = async (req, res, next) => {
@@ -23,11 +23,16 @@ const mostrarAnuncio = async (req, res, next) => {
 
     const single = result;
 
-    // 🆘️🆘️🆘️ FALTA ESTO   ----->   Para mostrar las fotos del anuncio:
+    // Para mostrar las fotos que tiene el anuncio:
+    const [fotos] = await connection.query(
+      `
+      SELECT idFotoAnuncio, foto, fechaPublicacion FROM fotos_anuncio WHERE idAnuncio=?`,
+      [idAnuncio]
+    );
 
     res.send({
       status: "ok",
-      data: single,
+      data: { ...single, fotos },
     });
   } catch (error) {
     next(error);

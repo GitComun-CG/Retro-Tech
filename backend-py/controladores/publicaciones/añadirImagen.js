@@ -37,7 +37,7 @@ const añadirImagen = async (req, res, next) => {
       // insertar la foto nueva a la tabla 'fotos_anuncio'
       await connection.query(
         `
-        INSERT INTO fotos_anuncio (fechaPublicacion, foto, idAnuncio)
+        INSERT INTO fotos_anuncio(fechaPublicacion, foto, idAnuncio)
             VALUES (?, ?, ?)`,
         [formatDateToDB(now), imagenGuardada, idAnuncio]
       );
