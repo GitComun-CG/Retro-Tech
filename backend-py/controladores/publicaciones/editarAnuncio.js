@@ -40,7 +40,7 @@ const editarAnuncio = async (req, res, next) => {
     // Hacer la query de UPDATE:
     await connection.query(
       `
-        UPDATE anuncios SET fechaPublicacion=?, titulo=?, descripcion=?, precio=?, provincia=?, localidad=? WHERE idAnuncio=?`,
+        UPDATE anuncios SET fechaPublicacion=?, titulo=?, descripcion=?, precio=?, provincia=?, localidad=? WHERE idAnuncio=?;`,
       [
         formatDateToDB(dbDate),
         titulo,

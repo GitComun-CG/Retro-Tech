@@ -15,7 +15,7 @@ const añadirImagen = async (req, res, next) => {
     // Para comprobar que hay espacio para más fotos (hemos puesto que como máximo puede haber 5, por lo que si ya hay 5 no se podrán añadir más)
     const [imagenesActuales] = await connection.query(
       `
-        SELECT idFotoAnuncio FROM fotos_anuncio WHERE idAnuncio=?`,
+        SELECT idFotoAnuncio FROM fotos_anuncio WHERE idAnuncio=?;`,
       [idAnuncio]
     );
     // Si el anuncio ya tiene 5 fotos, lanza error:
@@ -27,6 +27,7 @@ const añadirImagen = async (req, res, next) => {
       throw error;
     }
 
+    // 🆘️🆘️ ESTO NO VA:
     let imagenGuardada;
 
     if (req.files && req.files.foto) {
@@ -38,7 +39,7 @@ const añadirImagen = async (req, res, next) => {
       await connection.query(
         `
         INSERT INTO fotos_anuncio(fechaPublicacion, foto, idAnuncio)
-            VALUES (?, ?, ?)`,
+            VALUES (?, ?, ?);`,
         [formatDateToDB(now), imagenGuardada, idAnuncio]
       );
     }

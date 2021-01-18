@@ -15,7 +15,7 @@ const borrarLaImagen = async (req, res, next) => {
     // Seleccionar la foto de la Base de Datos:
     const [current] = await connection.query(
       `
-      SELECT foto FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?`,
+      SELECT foto FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?;`,
       [idFotoAnuncio, idAnuncio]
     );
 
@@ -31,7 +31,7 @@ const borrarLaImagen = async (req, res, next) => {
     // Borrar la foto de la Base de Datos:
     await connection.query(
       `
-      DELETE FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?`,
+      DELETE FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?;`,
       [idFotoAnuncio, idAnuncio]
     );
     res.send({

@@ -28,7 +28,7 @@ const crearAnuncio = async (req, res, next) => {
     const [result] = await connection.query(
       `
         INSERT INTO anuncios (fechaPublicacion, titulo, descripcion, precio, provincia, localidad, idUsuario, idCategoria)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         formatDateToDB(now),
         titulo,
@@ -57,7 +57,7 @@ const crearAnuncio = async (req, res, next) => {
         await connection.query(
           `
             INSERT INTO fotos_anuncio(fechaPublicacion, foto, idAnuncio)
-            VALUES (?, ?, ?)`,
+            VALUES (?, ?, ?);`,
           [formatDateToDB(now), imageFile, insertId]
         );
       }

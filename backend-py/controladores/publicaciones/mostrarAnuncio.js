@@ -17,7 +17,7 @@ const mostrarAnuncio = async (req, res, next) => {
       `
         SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario 
         FROM anuncios LEFT JOIN categorias ON (anuncios.idAnuncio = categorias.idCategoria)
-        WHERE anuncios.idAnuncio = ?`,
+        WHERE anuncios.idAnuncio = ?;`,
       [idAnuncio, idCategoria]
     );
 
@@ -26,7 +26,7 @@ const mostrarAnuncio = async (req, res, next) => {
     // Para mostrar las fotos que tiene el anuncio:
     const [fotos] = await connection.query(
       `
-      SELECT idFotoAnuncio, foto, fechaPublicacion FROM fotos_anuncio WHERE idAnuncio=?`,
+      SELECT idFotoAnuncio, foto, fechaPublicacion FROM fotos_anuncio WHERE idAnuncio=?;`,
       [idAnuncio]
     );
 

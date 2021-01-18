@@ -16,7 +16,7 @@ const listarAnuncios = async (req, res, next) => {
 
     let results;
 
-    // 🆘️ Esto es para buscar con el buscador. Si buscas una palabra, lista los anuncios que contienen esa palabra en el título o la descripción. La idea es que si buscas (por ejemplo) "Ordenador" o "Mando" busque los anuncios que tengan esas palabras en el título o la descripción. Ha funcionado a la primera sin dar error asi que seguramente esté mal.
+    // 🆘️ Esto es para buscar con el buscador. Si buscas una palabra, lista los anuncios que contienen esa palabra en el título o la descripción. Ha funcionado a la primera sin dar error asi que seguramente esté mal.
     if (search) {
       [results] = await connection.query(
         `
@@ -30,7 +30,7 @@ const listarAnuncios = async (req, res, next) => {
         `
         SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
-         WHERE anuncios.idCategoria = ?`,
+         WHERE anuncios.idCategoria = ?;`,
         [idCategoria]
       );
     }
@@ -48,10 +48,10 @@ const listarAnuncios = async (req, res, next) => {
     const { idAnuncio } = req.params;
     const [fotos] = await connection.query(
       `
-      SELECT foto FROM anuncios WHERE idAnuncio=?`,
+      SELECT foto FROM anuncios WHERE idAnuncio=?;`,
       [idAnuncio]
     );
-    console.log(fotos);
+
     res.send({
       status: "ok",
       data: { ...anunciosFiltrados, fotos },

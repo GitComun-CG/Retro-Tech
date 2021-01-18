@@ -47,10 +47,13 @@ async function main() {
             pais VARCHAR(200) NOT NULL,
             codigoPostal INT NOT NULL,
             fechaNacimiento DATE NOT NULL,
-            email VARCHAR(100),
+            email VARCHAR(100) NOT NULL,
                 -- para que no se pueda repetir el email
                 CONSTRAINT usuarios_email_uq2 UNIQUE(email),
-            contraseña VARCHAR(60) NOT NULL
+            contraseña VARCHAR(500) NOT NULL,
+            active BOOLEAN DEFAULT false,
+            codigoRegistro VARCHAR(100),
+            rol ENUM("admin", "normal") DEFAULT "normal" NOT NULL
             );
         `);
     // Creamos la tabla "categorias"
@@ -102,7 +105,7 @@ async function main() {
             idAnuncio INT UNSIGNED NOT NULL,
                 CONSTRAINT reserva_idAnuncio_fk3
                     FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
-            reservado BOOLEAN DEFAULT FALSE
+            reservado BOOLEAN DEFAULT false
             );
         `);
 
@@ -137,7 +140,18 @@ async function main() {
     // Ahora introducimos datos iniciales de prueba (con "faker" y "lodash"):
 
     // DATOS DE PRUEBA TABLA "usuarios":
-    const usuarios = 100;
+
+    // --- introducir un usuario administrador ---
+
+    await connection.query(`
+      INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol)
+      VALUES ("${formatDateToDB(
+        new Date()
+      )}", "Proyecto_hab20", "Proyecto", "HAB", "A Coruña", "España", "15100", "1995-03-24", "proyecto.hab2020@gmail.com", SHA2(${
+      process.env.ADMIN_PASSWORD
+    }, 224), true, "admin");`);
+
+    const usuarios = 80;
 
     for (let i = 0; i < usuarios; i++) {
       // -- pasamos la fecha de formato js a formato SQL con "date-fns" y el archivo "helpers.js" ---
@@ -161,9 +175,10 @@ async function main() {
       )}", "${email}", "${contraseña}")
         `);
     }
+
     console.log("Datos de prueba introducidos en la tabla 'usuarios'.");
     // DATOS DE PRUEBA TABLA "anuncios":
-    const anuncios = 30;
+    const anuncios = 200;
 
     for (let i = 0; i < anuncios; i++) {
       const now = new Date();
@@ -175,7 +190,7 @@ async function main() {
       // 🆘️ --- Si quiero que en vez de idCategoria aparezca nombreCategoria (con el nombre completo) ¿Cómo se hace eso? ---
       const idCategoria = random(1, 5);
       // 🆘️ el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
-      const idUsuario = random(1, 100);
+      const idUsuario = random(1, 80);
 
       await connection.query(`
             INSERT INTO anuncios (fechaPublicacion, titulo, descripcion, precio, provincia, localidad, idCategoria, idUsuario)
@@ -203,8 +218,8 @@ async function main() {
     const reservas = 20;
 
     for (let i = 0; i < reservas; i++) {
-      const idUsuario = random(1, 100);
-      const idAnuncio = random(1, 30);
+      const idUsuario = random(1, 80);
+      const idAnuncio = random(1, 200);
 
       await connection.query(`
             INSERT INTO reserva (idUsuario, idAnuncio)
@@ -218,8 +233,8 @@ async function main() {
 
     for (let i = 0; i < guardados; i++) {
       const now = new Date();
-      const idUsuario = random(1, 100);
-      const idAnuncio = random(1, 30);
+      const idUsuario = random(1, 80);
+      const idAnuncio = random(1, 200);
 
       await connection.query(`
             INSERT INTO guardados (idUsuario, idAnuncio, fechaGuardado)
@@ -235,7 +250,7 @@ async function main() {
     for (let i = 0; i < mensajes; i++) {
       const mensaje = faker.lorem.sentence();
       const now = new Date();
-      const idUsuario = random(1, 100);
+      const idUsuario = random(1, 80);
 
       await connection.query(`
             INSERT INTO chat (mensaje, fechaEnviado, idUsuario)

@@ -16,14 +16,14 @@ const borrarAnuncio = async (req, res, next) => {
     // Seleccionar las fotos relacionadas y borrar los ficheros de disco:
     const [imagen] = await connection.query(
       `
-        SELECT foto FROM fotos_anuncio WHERE idAnuncio=?`,
+        SELECT foto FROM fotos_anuncio WHERE idAnuncio=?;`,
       [idAnuncio]
     );
 
     // Borrar las posibles fotos de la tabla 'fotos_anuncio'...:
     await connection.query(
       `
-        DELETE FROM fotos_anuncio WHERE idAnuncio=?`,
+        DELETE FROM fotos_anuncio WHERE idAnuncio=?;`,
       [idAnuncio]
     );
 
@@ -37,7 +37,7 @@ const borrarAnuncio = async (req, res, next) => {
     // Borrar el anuncio de la tabla 'anuncios':
     await connection.query(
       `
-        DELETE FROM anuncios WHERE idAnuncio=?`,
+        DELETE FROM anuncios WHERE idAnuncio=?;`,
       [idAnuncio]
     );
     // Confirmar:

@@ -61,7 +61,7 @@ app.delete("/mis-anuncios/:idAnuncio", elAnuncioExiste, borrarAnuncio);
 // 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes
 app.post("/mis-anuncios/:idAnuncio/imagenes", elAnuncioExiste, añadirImagen);
 
-// ⭕️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen
+// 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen
 app.delete(
   "/mis-anuncios/:idAnuncio/imagenes/:idImagen",
   elAnuncioExiste,
