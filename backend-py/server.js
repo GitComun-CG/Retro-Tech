@@ -23,7 +23,7 @@ const {
   borrarImagen,
 } = require("./controladores/publicaciones");
 
-// ************* CONTROLADORES DE USUARIOS:
+// ************* CONTROLADORES DE USUARIOS ************
 const {
   crearUsuario,
   validarUsuario,
