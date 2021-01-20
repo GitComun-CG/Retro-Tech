@@ -22,6 +22,7 @@ const iniciarSesion = async (req, res, next) => {
         `,
       [email, contraseña]
     );
+
     // Si no existe, envíamos un error de que email o contraseña son incorrectas:
     if (usuario.length === 0) {
       const error = new Error("Email o contraseña incorrecta.");
