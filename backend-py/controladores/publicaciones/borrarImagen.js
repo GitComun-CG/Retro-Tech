@@ -1,5 +1,5 @@
 // SCRIPT PARA BORRAR IMÁGENES DE UN ANUNCIO:
-// - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen
+// - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idFotoAnuncio
 // 🆘️🆘️🆘️ LE DOY A BORRAR UNA FOTO QUE EXISTE Y ME DICE QUE LA FOTO NO EXISTE.
 const getDB = require("../../db");
 const { borrarImagen } = require("../../helpers");
@@ -15,8 +15,8 @@ const borrarLaImagen = async (req, res, next) => {
     // Seleccionar la foto de la Base de Datos:
     const [current] = await connection.query(
       `
-      SELECT foto FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?;`,
-      [idFotoAnuncio, idAnuncio]
+      SELECT foto FROM fotos_anuncio WHERE idAnuncio=? AND idFotoAnuncio=?;`,
+      [idAnuncio, idFotoAnuncio]
     );
 
     // Si la foto no existe, lanza un 404:
@@ -31,8 +31,8 @@ const borrarLaImagen = async (req, res, next) => {
     // Borrar la foto de la Base de Datos:
     await connection.query(
       `
-      DELETE FROM fotos_anuncio WHERE idFotoAnuncio=? AND idAnuncio=?;`,
-      [idFotoAnuncio, idAnuncio]
+      DELETE FROM fotos_anuncio WHERE idAnuncio=? AND idFotoAnuncio=?;`,
+      [idAnuncio, idFotoAnuncio]
     );
     res.send({
       status: "ok",

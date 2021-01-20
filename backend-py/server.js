@@ -11,7 +11,7 @@ const bodyParser = require("body-parser");
 // Para la subida de ficheros:
 const fileUpload = require("express-fileupload");
 
-// Controladores:
+// ************ CONTROLADORES DE PUBLICACIONES:
 const {
   listarCategorias,
   listarAnuncios,
@@ -22,6 +22,9 @@ const {
   añadirImagen,
   borrarImagen,
 } = require("./controladores/publicaciones");
+
+// ************* CONTROLADORES DE USUARIOS:
+const { crearUsuario } = require("./controladores/usuarios");
 
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
@@ -36,7 +39,9 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(fileUpload());
 
-// RUTAS DE LA API:
+/* 
+ RUTAS DE LA API PARA PUBLICACIONES:
+                                    */
 
 // 👍️ GET - /comprar  : devuelve los elementos de la tabla 'categorias'
 app.get("/comprar", listarCategorias);
@@ -67,6 +72,12 @@ app.delete(
   elAnuncioExiste,
   borrarImagen
 );
+
+/*
+RUTAS DE LA API PARA USUARIOS
+                            */
+// 🆘️ - POST - /usuarios
+app.post("/usuarios", crearUsuario);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

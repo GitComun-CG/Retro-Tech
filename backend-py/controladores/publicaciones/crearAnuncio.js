@@ -8,6 +8,7 @@ const { random } = require("lodash");
 const crearAnuncio = async (req, res, next) => {
   let connection;
 
+  const usuarios = 20;
   try {
     connection = await getDB();
 
@@ -23,7 +24,7 @@ const crearAnuncio = async (req, res, next) => {
     const now = new Date();
 
     const idCategoria = random(1, 5);
-    const idUsuario = random(1, 100);
+    const idUsuario = random(2, usuarios + 1);
 
     const [result] = await connection.query(
       `

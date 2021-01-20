@@ -151,7 +151,7 @@ async function main() {
       process.env.ADMIN_PASSWORD
     }, 224), true, "admin");`);
 
-    const usuarios = 80;
+    const usuarios = 20;
 
     for (let i = 0; i < usuarios; i++) {
       // -- pasamos la fecha de formato js a formato SQL con "date-fns" y el archivo "helpers.js" ---
@@ -167,18 +167,18 @@ async function main() {
       const contraseña = faker.internet.password();
 
       await connection.query(`
-        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña)
+        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active)
             VALUES ("${formatDateToDB(
               now
             )}", "${userName}", "${nombre}", "${apellidos}", "${ciudad}", "${pais}", "${cp}","${formatDateToDB(
         fechaNacimiento
-      )}", "${email}", "${contraseña}")
+      )}", "${email}", SHA2("${contraseña}", 224), true)
         `);
     }
 
     console.log("Datos de prueba introducidos en la tabla 'usuarios'.");
     // DATOS DE PRUEBA TABLA "anuncios":
-    const anuncios = 200;
+    const anuncios = 30;
 
     for (let i = 0; i < anuncios; i++) {
       const now = new Date();
@@ -190,7 +190,7 @@ async function main() {
       // 🆘️ --- Si quiero que en vez de idCategoria aparezca nombreCategoria (con el nombre completo) ¿Cómo se hace eso? ---
       const idCategoria = random(1, 5);
       // 🆘️ el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
-      const idUsuario = random(1, 80);
+      const idUsuario = random(2, usuarios + 1);
 
       await connection.query(`
             INSERT INTO anuncios (fechaPublicacion, titulo, descripcion, precio, provincia, localidad, idCategoria, idUsuario)
@@ -207,10 +207,10 @@ async function main() {
       const nombres = [i];
 
       await connection.query(`
-            INSERT INTO categorias ( nombre)
+            INSERT INTO categorias (nombre)
                 VALUES ( "${nombres}")`);
     }
-    // 🆘️ --- solo me sale la categoría "Consolas y Videojuegos" en la base de datos. ¿Cómo se hace para que me las ponga todas? ---
+    //  --- solo me sale la categoría "Consolas y Videojuegos" en la base de datos. ¿Cómo se hace para que me las ponga todas? ---
     // 🆘️ Lo he arreglado con la variable 'nombres' y poniendo que son 6 categorias ( 1 de más ) ya que los arrays empiezan en 0, pero creo que no es así. PREGUNTAR POR SI ACASO.
     console.log("Datos de prueba introducidos en la tabla 'categorias'.");
 
@@ -218,8 +218,8 @@ async function main() {
     const reservas = 20;
 
     for (let i = 0; i < reservas; i++) {
-      const idUsuario = random(1, 80);
-      const idAnuncio = random(1, 200);
+      const idUsuario = random(2, usuarios + 1);
+      const idAnuncio = random(1, anuncios);
 
       await connection.query(`
             INSERT INTO reserva (idUsuario, idAnuncio)
@@ -233,8 +233,8 @@ async function main() {
 
     for (let i = 0; i < guardados; i++) {
       const now = new Date();
-      const idUsuario = random(1, 80);
-      const idAnuncio = random(1, 200);
+      const idUsuario = random(2, usuarios + 1);
+      const idAnuncio = random(1, anuncios);
 
       await connection.query(`
             INSERT INTO guardados (idUsuario, idAnuncio, fechaGuardado)
@@ -250,7 +250,7 @@ async function main() {
     for (let i = 0; i < mensajes; i++) {
       const mensaje = faker.lorem.sentence();
       const now = new Date();
-      const idUsuario = random(1, 80);
+      const idUsuario = random(2, usuarios + 1);
 
       await connection.query(`
             INSERT INTO chat (mensaje, fechaEnviado, idUsuario)

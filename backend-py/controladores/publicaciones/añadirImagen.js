@@ -27,7 +27,6 @@ const añadirImagen = async (req, res, next) => {
       throw error;
     }
 
-    // 🆘️🆘️ ESTO NO VA:
     let imagenGuardada;
 
     if (req.files && req.files.foto) {

@@ -13,3 +13,9 @@ RUTAS:
 👍️ - PUT -  /edit/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio 
 👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js) --->   borra un anuncio y su contenido (fotos, etc)
 ⭕️ - POST - /mis-anuncios/guardados    --->   lista de anuncios guardados
+
+
+
+⭕️ - POST - /registro   --->   crear un usuario pendiente de activar
+⭕️ - GET - /usuarios/validar/:idValidacion   --->   validar un usuario recién registrado
+⭕️ - POST - /usuarios/iniciar-sesion   --->   iniciar la sesión de un usuario

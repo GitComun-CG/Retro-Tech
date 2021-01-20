@@ -9,7 +9,7 @@ const listarAnuncios = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    // 🆘️ DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero funcionar, FUNCIONA!!!!!!!!!!!)
+    // 🆘️ DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero funcionar, FUNCIONA!)
     const { idCategoria } = req.params;
 
     const { search } = req.query;
@@ -40,21 +40,34 @@ const listarAnuncios = async (req, res, next) => {
 
     if (anunciosFiltrados.idCategoria === null) {
       // Si no existe el idCategoria, lanza un error 404
-      const error = new Error("Lo siento, el elemento no existe.");
+      const error = new Error("Lo siento, la categoría no existe.");
       error.httpStatus = 404;
       throw error;
     }
 
-    const { idAnuncio } = req.params;
-    const [fotos] = await connection.query(
-      `
-      SELECT foto FROM anuncios WHERE idAnuncio=?;`,
-      [idAnuncio]
-    );
+    let resultadoConFotos = [];
+
+    if (results.legth > 0) {
+      const ids = results.map((result) => result.idAnuncio);
+
+      const [fotos] = await connection.query(`
+        SELECT * FROM fotos_anuncio WHERE idAnuncio IN (${ids.join(",")})`);
+
+      resultadoConFotos = results.map((result) => {
+        const fotoResultado = fotos.filter(
+          (foto) => foto.idAnuncio === result.idFotoAnuncio
+        );
+
+        return {
+          ...result,
+          fotos: fotoResultado,
+        };
+      });
+    }
 
     res.send({
       status: "ok",
-      data: { ...anunciosFiltrados, fotos },
+      data: { ...anunciosFiltrados, resultadoConFotos },
     });
   } catch (error) {
     next(error);

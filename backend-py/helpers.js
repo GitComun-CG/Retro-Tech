@@ -13,12 +13,21 @@ const uuid = require("uuid");
 // - para asegurar que existe un directorio:
 const { ensureDir, unlink } = require("fs-extra");
 
+// - para generar una cadena aleatoria -
+const crypto = require("crypto");
+
+// - para el envío de emails -
+const sgMail = require("@sendgrid/mail");
+
 const path = require("path");
 
-// imageData es el objeto con información de la imagen.
+// para fotos
 const { UPLOADS_DIRECTORY } = process.env;
 
 const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
+
+// para el envío de mails
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // *******  PARA EL CAMBIO DE FORMATO DE FECHA:  *******
 function formatDateToDB(dateObject) {
@@ -26,6 +35,7 @@ function formatDateToDB(dateObject) {
 }
 
 // *******  PARA LA SUBIDA DE FOTOS:  *******
+// imageData es el objeto con información de la imagen.
 async function guardarImagen(imageData) {
   // Asegurarse de que el directorio de subida de imágenes exista con la función ensureDir de 'fs-extra':
   await ensureDir(uploadsDir);
@@ -59,8 +69,39 @@ async function borrarImagen(imagen) {
   await unlink(imagenPath);
 }
 
+// ********* PARA GENERAR UNA CADENA DE CARACTERES ALEATORIA (CONTRASEÑA TEMPORAL) ************
+function generarCadenaAleatoria(length) {
+  return crypto.randomBytes(length).toString("hex");
+}
+
+// ********** PARA ENVIAR UN EMAIL *******************
+
+async function enviarEmail({ to, subject, body }) {
+  // https://www.npmjs.com/package/@sendgrid/mail
+  try {
+    const msg = {
+      to,
+      from: process.env.SENDGRID_FROM,
+      subject,
+      text: body,
+      html: `
+        <div>
+          <h1>${subject}</h1>
+          <p>${body}</p>
+        </div>
+      `,
+    };
+
+    await sgMail.send(msg);
+  } catch (error) {
+    throw new Error("Error enviando el email de validación.");
+  }
+}
+
 module.exports = {
   formatDateToDB,
   guardarImagen,
   borrarImagen,
+  generarCadenaAleatoria,
+  enviarEmail,
 };
