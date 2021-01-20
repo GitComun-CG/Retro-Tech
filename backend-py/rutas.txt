@@ -16,6 +16,6 @@ RUTAS:
 
 
 
-👍️🆘️ - POST - /usuarios   --->   crear un usuario pendiente de activar
-⭕️ - GET - /usuarios/validar/:codigoRegistro   --->   validar un usuario recién registrado
-⭕️ - POST - /usuarios/iniciar-sesion   --->   iniciar la sesión de un usuario
+👍️ - POST - /usuarios   --->   crear un usuario pendiente de activar
+👍️ - GET - /usuarios/validar/:codigoRegistro   --->   validar un usuario recién registrado
+👍️ - POST - /usuarios/login  --->   iniciar la sesión de un usuario
