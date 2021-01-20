@@ -1,6 +1,5 @@
 // SCRIPT PARA REGISTRAR UN NUEVO USUARIO
 // - POST - /usuarios
-// 🆘️🆘️🆘️ Cuando intento añadir un usuario me lanza el error de la línea 97 de /helpers. Si el usuario existe si que funciona y lanza el error correcto. No entiendo nada.
 const getDB = require("../../db");
 const {
   generarCadenaAleatoria,
@@ -98,7 +97,8 @@ const crearUsuario = async (req, res, next) => {
     // Mandar una respuesta
     res.send({
       status: "ok",
-      message: "Crear nuevo usuario.",
+      message:
+        "El usuario ha sido registrado. En breves recibirás un correo electrónico para validar tu cuenta.",
     });
   } catch (error) {
     next(error);

@@ -24,7 +24,11 @@ const {
 } = require("./controladores/publicaciones");
 
 // ************* CONTROLADORES DE USUARIOS:
-const { crearUsuario } = require("./controladores/usuarios");
+const {
+  crearUsuario,
+  validarUsuario,
+  iniciarSesion,
+} = require("./controladores/usuarios");
 
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
@@ -78,6 +82,12 @@ RUTAS DE LA API PARA USUARIOS
                             */
 // 🆘️ - POST - /usuarios
 app.post("/usuarios", crearUsuario);
+
+// GET - /usuarios/validar/:codigoValidacion
+app.get("/usuarios/validar/:codigoRegistro", validarUsuario);
+
+// POST - /usuarios/login
+app.post("/usuarios/login", iniciarSesion);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

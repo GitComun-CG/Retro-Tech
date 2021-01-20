@@ -13,3 +13,4 @@
 - npm install fs-extra
 - npm install sharp : para editar imágenes
 - npm install uuid  :  generador de nombre único para las imágenes subidas 
+- npm install jsonwebtoken   :   generador de tokens para identificar a un usuario
