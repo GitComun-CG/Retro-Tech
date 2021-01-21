@@ -26,7 +26,7 @@ const crearUsuario = async (req, res, next) => {
       email,
       contraseña,
     } = req.body;
-    //MARCA
+
     // Compruebo que no estén vacíos
     if (
       !userName ||
