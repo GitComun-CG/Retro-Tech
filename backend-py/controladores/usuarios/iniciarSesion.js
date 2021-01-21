@@ -41,7 +41,7 @@ const iniciarSesion = async (req, res, next) => {
 
     // Crear un objeto de información que irá en el token:
     const info = {
-      id: usuario[0].id,
+      id: usuario[0].idUsuario,
       rol: usuario[0].rol,
     };
 

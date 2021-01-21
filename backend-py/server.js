@@ -32,6 +32,7 @@ const {
 
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
+const esUsuario = require("./middlewares/esUsuario");
 
 const { PORT } = process.env;
 
@@ -56,21 +57,26 @@ app.get("/comprar/:idCategoria", listarAnuncios);
 // 👍️ GET - comprar/:idCategoria/:idAnuncio : muestra un anuncio
 app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 
-// 👍️ POST - /subir  : para crear un anuncio
-app.post("/subir", crearAnuncio);
+// 👍️ POST - /subir  : para crear un anuncio (TOKEN)
+app.post("/subir", esUsuario, crearAnuncio);
 
-// 👍️ PUT - /edit/:idAnuncio : para editar un anuncio
-app.put("/edit/:idAnuncio", elAnuncioExiste, editarAnuncio);
+// 👍️ PUT - /edit/:idAnuncio : para editar un anuncio (TOKEN)
+app.put("/edit/:idAnuncio", esUsuario, elAnuncioExiste, editarAnuncio);
 
-// 👍️ DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio
-app.delete("/mis-anuncios/:idAnuncio", elAnuncioExiste, borrarAnuncio);
+// 👍️ DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio (TOKEN)
+app.delete(
+  "/mis-anuncios/:idAnuncio",
+  esUsuario,
+  elAnuncioExiste,
+  borrarAnuncio
+);
 
 // ⭕️ Guardar anuncios (?)
 
-// 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes
+// 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes: para subir una foto a un anuncio (TOKEN)
 app.post("/mis-anuncios/:idAnuncio/imagenes", elAnuncioExiste, añadirImagen);
 
-// 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen
+// 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen: para eliminar una foto de un anuncio (TOKEN)
 app.delete(
   "/mis-anuncios/:idAnuncio/imagenes/:idImagen",
   elAnuncioExiste,
@@ -80,13 +86,13 @@ app.delete(
 /*
 RUTAS DE LA API PARA USUARIOS
                             */
-// 🆘️ - POST - /usuarios
+// 👍️ - POST - /usuarios
 app.post("/usuarios", crearUsuario);
 
-// GET - /usuarios/validar/:codigoValidacion
+// 👍️ - GET - /usuarios/validar/:codigoValidacion
 app.get("/usuarios/validar/:codigoRegistro", validarUsuario);
 
-// POST - /usuarios/login
+// 👍️ - POST - /usuarios/login
 app.post("/usuarios/login", iniciarSesion);
 
 // Crear middlewar de error:

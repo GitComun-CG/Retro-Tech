@@ -2,22 +2,22 @@ RUTAS:
 
         ---------->   PUBLICACIONES   <----------
 
-👍️ - GET - /comprar   (listarCategorias.js) --->   lista con todas las categorías
-👍 - GET - /comprar/:idCategoria   (listarAnuncios.js) --->   lista con los anuncios dentro de una categoría en concreto
-👍️🆘️ - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js) --->   muestra un anuncio seleccionado
+👍️ - GET - /comprar   (listarCategorias.js) --->   lista con todas las categorías       
+👍 - GET - /comprar/:idCategoria   (listarAnuncios.js) --->   lista con los anuncios dentro de una categoría en concreto       
+👍️🆘️ - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js) --->   muestra un anuncio seleccionado      
 
-👍️ - POST - /subir   (crearAnuncio.js) --->   crea un anuncio con fotos y todos los campos
-👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js) --->  añadir una imagen a un anuncio
-👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js) --->   borrar una imagen de un anuncio
+👍️ - POST - /subir   (crearAnuncio.js) --->   crea un anuncio con fotos y todos los campos      ----------    👍️  CON TOKEN
+👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js) --->  añadir una imagen a un anuncio          -----------    ⭕️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
+👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js) --->   borrar una imagen de un anuncio           ---------------- ⭕️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
 
-👍️ - PUT -  /edit/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio 
-👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js) --->   borra un anuncio y su contenido (fotos, etc)
+👍️ - PUT -  /edit/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
+👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js) --->   borra un anuncio y su contenido (fotos, etc)         ---------    ⭕️   CON TOKEN Y COMPROBACIÓN DE USUARIO (o admin)
 ⭕️ - POST - /mis-anuncios/guardados    --->   lista de anuncios guardados
 
 
 
 👍️ - POST - /usuarios   --->   crear un usuario pendiente de activar
 👍️ - GET - /usuarios/validar/:codigoRegistro   --->   validar un usuario recién registrado
-👍️ - POST - /usuarios/login  --->   iniciar la sesión de un usuario
+👍️ - POST - /usuarios/login  --->   iniciar la sesión de un usuario y devolver el token
 
 
