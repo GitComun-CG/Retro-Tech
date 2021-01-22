@@ -18,6 +18,6 @@ RUTAS:
 
 👍️ - POST - /usuarios   --->   crear un usuario pendiente de activar
 👍️ - GET - /usuarios/validar/:codigoRegistro   --->   validar un usuario recién registrado
-👍️ - POST - /usuarios/login  --->   iniciar la sesión de un usuario y devolver el token
+👍️ - POST - /usuarios/login  --->   iniciar la sesión de un usuario y devolver el tokenn
 
 
