@@ -10,7 +10,7 @@ RUTAS:
 👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js) --->  añadir una imagen a un anuncio          -----------    ⭕️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
 👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js) --->   borrar una imagen de un anuncio           ---------------- ⭕️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
 
-👍️ - PUT -  /edit/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
+👍️ - PUT -  /mis-anuncios/:idAnuncio   (editarAnuncio.js) --->   edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO 
 👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js) --->   borra un anuncio y su contenido (fotos, etc)         ---------    ⭕️   CON TOKEN Y COMPROBACIÓN DE USUARIO (o admin)
 ⭕️ - POST - /mis-anuncios/guardados    --->   lista de anuncios guardados
 

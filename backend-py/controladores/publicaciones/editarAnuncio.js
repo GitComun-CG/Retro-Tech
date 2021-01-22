@@ -11,18 +11,6 @@ const editarAnuncio = async (req, res, next) => {
 
     const { idAnuncio } = req.params;
 
-    // Seleccionar el anuncio de la base de datos para saber quien la creó:
-    const [current] = await connection.query(
-      `
-      SELECT idUsuario FROM anuncios WHERE idAnuncio=?`,
-      [idAnuncio]
-    );
-    // Comprobar que la id de usuario que la creó es la misma que la que viene en el token:
-    if (current[0].idUsuario !== req.userAuth.id) {
-      const error = new Error("No tienes permiso para editar este anuncio.");
-      error.httpStatus = 401;
-      throw error;
-    }
     // Comprobar que los datos mínimos vienen en el body:
     const {
       fechaPublicacion,

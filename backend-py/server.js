@@ -33,6 +33,7 @@ const {
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
 const esUsuario = require("./middlewares/esUsuario");
+const puedeEditar = require("./middlewares/puedeEditar");
 
 const { PORT } = process.env;
 
@@ -60,26 +61,41 @@ app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 // 👍️ POST - /subir  : para crear un anuncio (TOKEN)
 app.post("/subir", esUsuario, crearAnuncio);
 
-// 👍️ PUT - /edit/:idAnuncio : para editar un anuncio (TOKEN)
-app.put("/edit/:idAnuncio", esUsuario, elAnuncioExiste, editarAnuncio);
+// 👍️ PUT - /mis-anuncios/:idAnuncio : para editar un anuncio (TOKEN)
+app.put(
+  "/mis-anuncios/:idAnuncio",
+  esUsuario,
+  elAnuncioExiste,
+  puedeEditar,
+  editarAnuncio
+);
 
 // 👍️ DELETE - /mis-anuncios/:idAnuncio  : para borrar un anuncio (TOKEN)
 app.delete(
   "/mis-anuncios/:idAnuncio",
   esUsuario,
   elAnuncioExiste,
+  puedeEditar,
   borrarAnuncio
 );
 
 // ⭕️ Guardar anuncios (?)
 
 // 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes: para subir una foto a un anuncio (TOKEN)
-app.post("/mis-anuncios/:idAnuncio/imagenes", elAnuncioExiste, añadirImagen);
+app.post(
+  "/mis-anuncios/:idAnuncio/imagenes",
+  esUsuario,
+  elAnuncioExiste,
+  puedeEditar,
+  añadirImagen
+);
 
 // 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen: para eliminar una foto de un anuncio (TOKEN)
 app.delete(
   "/mis-anuncios/:idAnuncio/imagenes/:idImagen",
+  esUsuario,
   elAnuncioExiste,
+  puedeEditar,
   borrarImagen
 );
 

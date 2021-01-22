@@ -42,6 +42,7 @@ const añadirImagen = async (req, res, next) => {
         [formatDateToDB(now), imagenGuardada, idAnuncio]
       );
     }
+
     res.send({
       status: "ok",
       data: {
