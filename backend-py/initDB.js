@@ -39,7 +39,7 @@ async function main() {
             fechaRegistro DATETIME NOT NULL,
             userName VARCHAR(50) NOT NULL,
                 -- para que no se pueda repetir el userName
-                CONSTRAINT usuarios_userName_uq2 UNIQUE(userName),
+                CONSTRAINT usuarios_userName_uq1 UNIQUE(userName),
             nombre VARCHAR(60) NOT NULL,
             apellidos VARCHAR(120) NOT NULL,
             foto VARCHAR(500),

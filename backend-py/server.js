@@ -30,6 +30,8 @@ const {
   iniciarSesion,
   mostrarUsuario,
   borrarUsuario,
+  editarUsuario,
+  cambiarContraseña,
 } = require("./controladores/usuarios");
 
 // Middlewares:
@@ -117,11 +119,14 @@ app.get("/usuarios/validar/:codigoRegistro", validarUsuario);
 // 👍️ - POST - /usuarios/login   --->   iniciar sesión
 app.post("/usuarios/login", iniciarSesion);
 
-// - GET - /usuarios/:idUsuario   --->   mostrar indormación de usuario
+// 👍️ - GET - /usuarios/:idUsuario   --->   mostrar indormación de usuario
 app.get("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, mostrarUsuario);
 
-// - DELETE - /usuarios/:idUsuario   --->   borrar un usuario
+// 👍️ - DELETE - /usuarios/:idUsuario   --->   borrar un usuario
 app.delete("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, borrarUsuario);
+
+// 🆘️ - PUT - /usuarios/:idUsuar  --->  editar un usuario
+app.put("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, editarUsuario);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

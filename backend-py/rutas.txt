@@ -3,20 +3,20 @@
 
 
            *****************************************************************************************************************************************************
-        ***                                      __________________________________________________________________                                             ***                                                                   ***         
-        ***                                     |       ---------->   PUBLICACIONES   <----------                  |                                            ***                               
-        ***                                     |__________________________________________________________________|                                            ***        
+        ***                                      __________________________________________________________________                                             ***
+        ***                                     |            ---------->   PUBLICACIONES   <----------             |                                            ***
+        ***                                     |__________________________________________________________________|                                            ***
         ***                                                                                                                                                     ***
         ***                                                                                                                                                     ***
-        ***        👍️ - GET - /comprar   (listarCategorias.js)                                                                                                  ***
+        ***     👍️ - GET - /comprar   (listarCategorias.js)                                                                                                     ***
         ***                lista con todas las categorías                                                                                                       ***
         ***                                                                                                                                                     ***
         ***                                                                                                                                                     ***
-        ***        👍 - GET - /comprar/:idCategoria   (listarAnuncios.js)                                                                                       ***
+        ***     👍 - GET - /comprar/:idCategoria   (listarAnuncios.js)                                                                                          ***
         ***                lista con los anuncios dentro de una categoría en concreto                                                                           ***
         ***                                                                                                                                                     ***
         ***                                                                                                                                                     ***
-        ***        👍️🆘️ - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js)                                                                          ***
+        ***     👍️🆘️ - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js)                                                                             ***
         ***                muestra un anuncio seleccionado                                                                                                      ***
         ***                                                                                                                                                     ***
         ***                                                                                                                                                     ***
@@ -24,69 +24,73 @@
 
 
            *****************************************************************************************************************************************************
-        ***                                      __________________________________________________________________                                             ***                                                                   ***         
-        ***                                     |---------->   PUBLICACIONES CON REGISTRO OBLIGATORIO  <---------- |                                            ***                               
-        ***                                     |__________________________________________________________________|                                            ***                                                                    ***
-        ***                                                                                                                                                     *** 
-        ***       👍️ - POST - /subir   (crearAnuncio.js)                                                                                                        ***                 
-        ***              crea un anuncio con fotos y todos los campos      ----------    👍️  CON TOKEN                                                          *** 
-        ***       ________________________________________________________________________________________________________________________________________      *** 
-        ***                                                                                                                                                     *** 
-        ***      👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js)                                                                             *** 
-        ***              añadir una imagen a un anuncio          -----------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                         *** 
-        ***       ________________________________________________________________________________________________________________________________________      ***         
-        ***                                                                                                                                                     ***         
-        ***      👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js)                                                                ***  
-        ***              borrar una imagen de un anuncio           ---------------- 👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                     *** 
-        ***       ________________________________________________________________________________________________________________________________________      *** 
-        ***                                                                                                                                                     ***                 
-        ***      👍️ - PUT -  /mis-anuncios/:idAnuncio   (editarAnuncio.js)                                                                                      *** 
-        ***              edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                                 *** 
-        ***       ________________________________________________________________________________________________________________________________________      *** 
+        ***                                      __________________________________________________________________                                             ***
+        ***                                     |   ------->   PUBLICACIONES CON REGISTRO OBLIGATORIO  <-------    |                                            ***
+        ***                                     |__________________________________________________________________|                                            ***
         ***                                                                                                                                                     ***
-        ***      👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js)                                                                                    *** 
+        ***     👍️ - POST - /subir   (crearAnuncio.js)                                                                                                          ***
+        ***              crea un anuncio con fotos y todos los campos      ----------    👍️  CON TOKEN                                                          ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️🆘️ - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js)                                                                              ***
+        ***              añadir una imagen a un anuncio          -----------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                         ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️🆘️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen   (borrarImagen.js)                                                                 ***
+        ***              borrar una imagen de un anuncio           ---------------- 👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                     ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - PUT -  /mis-anuncios/:idAnuncio   (editarAnuncio.js)                                                                                       ***
+        ***              edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO                                                 ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js)                                                                                     ***
         ***              borra un anuncio y su contenido (fotos, etc)         ---------    👍️   CON TOKEN Y COMPROBACIÓN DE USUARIO (o admin)                   ***
-        ***       ________________________________________________________________________________________________________________________________________      ***                                 
+        ***       ________________________________________________________________________________________________________________________________________      ***
         ***                                                                                                                                                     ***
-        ***      ⭕️ - POST - /mis-anuncios/guardados                                                                                                            ***                                                          
+        ***     ⭕️ - POST - /mis-anuncios/guardados                                                                                                             ***
         ***              lista de anuncios guardados                                                                                                            ***
         ***                                                                                                                                                     *** 
            *****************************************************************************************************************************************************
 
 
-                        ---------->   USUARIOS   <----------
+           *****************************************************************************************************************************************************
+        ***                                      __________________________________________________________________                                             ***
+        ***                                     |               ---------->   USUARIOS   <----------               |                                            ***
+        ***                                     |__________________________________________________________________|                                            ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - POST - /usuarios                                                                                                                           ***
+        ***             crear un usuario pendiente de activar                                                                                                   ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - GET - /usuarios/validar/:codigoRegistro                                                                                                    ***
+        ***             validar un usuario recién registrado                                                                                                    ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - POST - /usuarios/login                                                                                                                     ***
+        ***             iniciar la sesión de un usuario y devolver el token                                                                                     ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - GET - /usuarios/:idUsuario                                                                                                                 ***
+        ***             mostrar el perfil de un usuario con información básica. Si quien busca el perfil es el dueño, muestra más info. --------- CON TOKEN     ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️ - DELETE - /usuarios/:idUsuario                                                                                                              ***
+        ***             borra un usuario.       ----------  solo lo puede hacer el dueño del perfil o el admin                                                  ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     👍️🆘️ - PUT - /usuarios/:idUsuario                                                                                                               ***
+        ***             editar el perfil        ----------  solo el dueño del perfil                                                                            ***
+        ***       ________________________________________________________________________________________________________________________________________      ***
+        ***                                                                                                                                                     ***
+        ***     ⭕️ - PUT - /usuarios/:idUsuario/constrasena                                                                                                     ***
+        ***             editar contraseña del usuario    ----------  solo el dueño del perfil                                                                   ***
+        ***                                                                                                                                                     ***
+           *****************************************************************************************************************************************************                                                                                                                                                    
+                                                                                                                                                             
+                PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
 
-👍️ - POST - /usuarios   
-        crear un usuario pendiente de activar
+                - Enviar al mail del usuario un código para la recuperación.
+                - Usar ese código para cambiar la contraseña sin acceder previamente.
 
-
-👍️ - GET - /usuarios/validar/:codigoRegistro   
-        validar un usuario recién registrado
-
-
-👍️ - POST - /usuarios/login  
-        iniciar la sesión de un usuario y devolver el token
-
-
-👍️ - GET - /usuarios/:idUsuario   
-        mostrar el perfil de un usuario con información básica. Si quien busca el perfil es el dueño, muestra más info.         --------- CON TOKEN
-
-
-⭕️ - DELETE - /usuarios/:idUsuario
-        borra un usuario.       ----------  solo lo puede hacer el admin
-
-
-⭕️ - PUT - /usuarios/:idUsuario
-        editar el perfil        ----------  solo el dueño del perfil a editar
-
-
-⭕️ - PUT - /usuarios/:idUsuario/constraseña  
-        editar contraseña del usuario    ----------  solo el dueño del perfil 
-
-
-        PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
-
-- Enviar al mail del usuario un código para la recuperación.
-- Usar ese código para cambiar la contraseña sin acceder previamente.
-
-Modificar el middleware de esUsuario para asegurarnos de que los tokens creados antes de la modificación de la contraseña no sean válidos
+                Modificar el middleware de esUsuario para asegurarnos de que los tokens creados antes de la modificación de la contraseña no sean válidos
