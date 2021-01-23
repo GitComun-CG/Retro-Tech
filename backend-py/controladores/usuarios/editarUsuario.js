@@ -1,5 +1,5 @@
 // SCRIPT PARA EDITAR UN USUARIO
-// 🆘️🆘️🆘️ Me da un error con la UNIQUE de userName y email. No entiendo por qué :(     El email si lo manda.
+// 🆘️🆘️🆘️ Me da un error con la UNIQUE de userName y email. No entiendo por qué :(     El email si lo manda y también sube la foto.
 
 const getDB = require("../../db");
 const {
