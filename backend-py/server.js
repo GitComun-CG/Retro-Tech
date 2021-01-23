@@ -28,10 +28,13 @@ const {
   crearUsuario,
   validarUsuario,
   iniciarSesion,
+  mostrarUsuario,
+  borrarUsuario,
 } = require("./controladores/usuarios");
 
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
+const elUsuarioExiste = require("./middlewares/elUsuarioExiste");
 const esUsuario = require("./middlewares/esUsuario");
 const puedeEditar = require("./middlewares/puedeEditar");
 
@@ -40,9 +43,11 @@ const { PORT } = process.env;
 // Crear la app de express:
 const app = express();
 
-// Aplicación de middlewares:
+// Logger:
 app.use(morgan("dev"));
+// Body parser (body en JSON):
 app.use(bodyParser.json());
+// Body parser (multipart form data <- subida de imágenes):
 app.use(fileUpload());
 
 /* 
@@ -102,14 +107,21 @@ app.delete(
 /*
 RUTAS DE LA API PARA USUARIOS
                             */
-// 👍️ - POST - /usuarios
+
+// 👍️ - POST - /usuarios   --->   crear un usuario nuevo
 app.post("/usuarios", crearUsuario);
 
-// 👍️ - GET - /usuarios/validar/:codigoValidacion
+// 👍️ - GET - /usuarios/validar/:codigoValidacion   --->   validar un usuario registrado
 app.get("/usuarios/validar/:codigoRegistro", validarUsuario);
 
-// 👍️ - POST - /usuarios/login
+// 👍️ - POST - /usuarios/login   --->   iniciar sesión
 app.post("/usuarios/login", iniciarSesion);
+
+// - GET - /usuarios/:idUsuario   --->   mostrar indormación de usuario
+app.get("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, mostrarUsuario);
+
+// - DELETE - /usuarios/:idUsuario   --->   borrar un usuario
+app.delete("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, borrarUsuario);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

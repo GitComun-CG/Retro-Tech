@@ -10,7 +10,7 @@ const listarCategorias = async (req, res, next) => {
 
     // Leer las categorías de la Base de Datos:
     const [results] = await connection.query(`
-        SELECT nombre FROM categorias;
+        SELECT idCategoria, nombre FROM categorias;
         `);
 
     // console.log(results);

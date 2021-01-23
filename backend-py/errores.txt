@@ -4,3 +4,4 @@
 4. El archivo 'listarAnuncios.js' tiene varios problemas.
 5. El archivo 'mostrarAnuncio.js' también tiene algún problema.
 6. El 'initDB.js' tiene problemas y dudas pero funciona.
+7. El usuario admin no funciona. Lo crea pero no me deja iniciar sesión con él. 

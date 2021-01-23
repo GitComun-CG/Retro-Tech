@@ -23,7 +23,8 @@ const crearAnuncio = async (req, res, next) => {
     const now = new Date();
 
     const idCategoria = random(1, 5);
-    // Para comprobar el token del usuario que crea el anuncio. 🆘️ ¿Se haría igual para el apartado 'categorías'?
+    // Para comprobar el token del usuario que crea el anuncio.
+    // 🆘️ ¿Se haría igual para el apartado 'categorías'?
     const idUsuario = req.userAuth.id;
 
     const [result] = await connection.query(

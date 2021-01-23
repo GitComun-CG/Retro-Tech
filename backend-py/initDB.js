@@ -52,6 +52,7 @@ async function main() {
                 CONSTRAINT usuarios_email_uq2 UNIQUE(email),
             contraseña VARCHAR(500) NOT NULL,
             active BOOLEAN DEFAULT false,
+            borrado BOOLEAN DEFAULT false,
             codigoRegistro VARCHAR(100),
             rol ENUM("admin", "normal") DEFAULT "normal" NOT NULL
             );
@@ -78,7 +79,7 @@ async function main() {
             foto VARCHAR(500), 
             idUsuario INT UNSIGNED NOT NULL,
                 CONSTRAINT anuncios_idUsuario_fk1
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) 
             );
         `);
 
@@ -147,9 +148,9 @@ async function main() {
       INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol)
       VALUES ("${formatDateToDB(
         new Date()
-      )}", "Proyecto_hab20", "Proyecto", "HAB", "A Coruña", "España", "15100", "1995-03-24", "proyecto.hab2020@gmail.com", SHA2(${
+      )}", "Proyecto_hab20", "Proyecto", "HAB", "A Coruña", "España", "15100", "1995-03-24", "proyecto.hab2020@gmail.com", SHA2("${
       process.env.ADMIN_PASSWORD
-    }, 224), true, "admin");`);
+    }", 512), true, "admin");`);
 
     const usuarios = 20;
 

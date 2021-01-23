@@ -6,231 +6,458 @@
 	},
 	"item": [
 		{
-			"name": "Listar Categorías",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/comprar",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"comprar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar de anuncios de una categoría",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3002/comprar/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3002",
-					"path": [
-						"comprar",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar anuncios",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/comprar/2?search=sega",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"comprar",
-						"2"
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "sega"
+			"name": "Publicaciones",
+			"item": [
+				{
+					"name": "Listar Categorías",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/comprar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"comprar"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Muestra un anuncio",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3002/comprar/3/11",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3002",
-					"path": [
-						"comprar",
-						"3",
-						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear Anuncio",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "titulo",
-							"value": "Sega Mega Drive",
-							"type": "text"
-						},
-						{
-							"key": "descripcion",
-							"value": "Sega Mega Drive en perfecto estado",
-							"type": "text"
-						},
-						{
-							"key": "precio",
-							"value": "175",
-							"type": "text"
-						},
-						{
-							"key": "provincia",
-							"value": "A Coruña",
-							"type": "text"
-						},
-						{
-							"key": "localidad",
-							"value": "Sada",
-							"type": "text"
-						},
-						{
-							"key": "foto1",
-							"type": "file",
-							"src": "/home/guille/Descargas/foto-sm1.jpg"
-						},
-						{
-							"key": "foto2",
-							"type": "file",
-							"src": "/home/guille/Descargas/foto-sm2.jpg"
-						},
-						{
-							"key": "foto3",
-							"type": "file",
-							"src": "/home/guille/Descargas/foto-sm3.jpg"
-						},
-						{
-							"key": "foto4",
-							"type": "file",
-							"src": "/home/guille/Descargas/foto-sm4.jpg",
-							"disabled": true
-						},
-						{
-							"key": "foto5",
-							"type": "file",
-							"src": "/home/guille/Descargas/foto-sm5.jpg",
-							"disabled": true
-						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3002/subir",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3002",
-					"path": [
-						"subir"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Editar Anuncio",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"fechaPublicacion\": \"2019-01-15T19:42:02.000Z\",\n  \"titulo\":  \"Mando NES\",\n  \"descripcion\": \"Mando NES en perfecto estado. Lo vendo por no utilizarlo.\",\n  \"precio\": \"17,40\",\n  \"provincia\": \"Lugo\",\n  \"localidad\": \"Xove\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Lista de anuncios de una categoría",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/comprar/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"comprar",
+								"2"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3002/edit/170",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3002",
-					"path": [
-						"edit",
-						"170"
-					]
+				{
+					"name": "Buscar anuncios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/comprar/1?search=range",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"comprar",
+								"1"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "fechaPublicacion",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "range"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Muestra un anuncio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/comprar/1/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"comprar",
+								"1",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Anuncio",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzOTk0OCwiZXhwIjoxNjEzOTMxOTQ4fQ.dh_XiVumyUOXU2hoZSlf2nvFWMUnmoe8nDVDI-hKVfw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fechaPublicacion\": \"2019-01-15T19:42:02.000Z\",\n  \"titulo\":  \"Juegos\",\n  \"descripcion\": \"Juegos de la NES. Los vendo por no utilizarlos.\",\n  \"precio\": \"10.50\",\n  \"provincia\": \"Lugo\",\n  \"localidad\": \"Xove\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/mis-anuncios/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"mis-anuncios",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Anuncio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM2MTUxMSwiZXhwIjoxNjEzOTUzNTExfQ.uwt1jSKfmzIg-WL_TjNzHBAk_5lnqNB2M1hwCvUktiQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "titulo",
+									"value": "otro anuncio prueba",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "blablablablablablsdqwe2312",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "provincia",
+									"value": "Pontevedra",
+									"type": "text"
+								},
+								{
+									"key": "localidad",
+									"value": "Vigo",
+									"type": "text"
+								},
+								{
+									"key": "foto1",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm1.jpg",
+									"disabled": true
+								},
+								{
+									"key": "foto2",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm2.jpg",
+									"disabled": true
+								},
+								{
+									"key": "foto3",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm3.jpg",
+									"disabled": true
+								},
+								{
+									"key": "foto4",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm4.jpg",
+									"disabled": true
+								},
+								{
+									"key": "foto5",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm5.jpg",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/subir",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"subir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Anuncio",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzNzU3NSwiZXhwIjoxNjEzOTI5NTc1fQ.0PRtFttXHy9pHTmF1UXceENjm3gwLkfHEbQvRfyulXM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3005/mis-anuncios/35",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"mis-anuncios",
+								"35"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar foto de un anuncio",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM2MTUxMSwiZXhwIjoxNjEzOTUzNTExfQ.uwt1jSKfmzIg-WL_TjNzHBAk_5lnqNB2M1hwCvUktiQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3005/mis-anuncios/35/imagenes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"mis-anuncios",
+								"35",
+								"imagenes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir foto a un anuncio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzOTk0OCwiZXhwIjoxNjEzOTMxOTQ4fQ.dh_XiVumyUOXU2hoZSlf2nvFWMUnmoe8nDVDI-hKVfw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foto\n",
+									"type": "file",
+									"src": "/home/guille/Descargas/foto-sm3.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3005/mis-anuncios/12/imagenes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"mis-anuncios",
+								"12",
+								"imagenes"
+							],
+							"query": [
+								{
+									"key": "foto",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Borrar Anuncio",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3002/mis-anuncios/37",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3002",
-					"path": [
-						"mis-anuncios",
-						"37"
-					]
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear / Registrar Nuevo Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\": \"Guillx95\",\n    \"nombre\": \"Guillermo\",\n    \"apellidos\": \"Gil\",\n    \"ciudad\": \"Laxe\",\n    \"pais\": \"España\",\n    \"codigoPostal\": \"15117\",\n    \"fechaNacimiento\": \"1995-03-24\",\n    \"email\": \"guillx.gv@gmail.com\",\n    \"contraseña\": \"aversifunciona\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar Sesión",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"guillx.gv@gmail.com\",\n    \"contraseña\": \"aversifunciona\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/usuarios/validar/84b7eaffe23da49ad8bbc958d917b0da60ac5ea10ed863381ddcc040e83d5c65b51a3a4e18ea35f2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"validar",
+								"84b7eaffe23da49ad8bbc958d917b0da60ac5ea10ed863381ddcc040e83d5c65b51a3a4e18ea35f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Muestra información de usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzOTk0OCwiZXhwIjoxNjEzOTMxOTQ4fQ.dh_XiVumyUOXU2hoZSlf2nvFWMUnmoe8nDVDI-hKVfw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3005/usuarios/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM2MDI0MywiZXhwIjoxNjEzOTUyMjQzfQ.NV9csvK0Cq1wm69AzGF4gYdenjiNXph-gDynIjGqks4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3005/usuarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Añadir foto a un anuncio",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
