@@ -54,7 +54,9 @@ async function main() {
             active BOOLEAN DEFAULT false,
             borrado BOOLEAN DEFAULT false,
             codigoRegistro VARCHAR(100),
-            rol ENUM("admin", "normal") DEFAULT "normal" NOT NULL
+            rol ENUM("admin", "normal") DEFAULT "normal" NOT NULL,
+            ultimaActualizacion DATETIME,
+            codigoRecuperacion VARCHAR(100)
             );
         `);
     // Creamos la tabla "categorias"
@@ -188,9 +190,7 @@ async function main() {
       const precio = random(10, 10000);
       const provincia = faker.address.state();
       const localidad = faker.address.city();
-      // 🆘️ --- Si quiero que en vez de idCategoria aparezca nombreCategoria (con el nombre completo) ¿Cómo se hace eso? ---
       const idCategoria = random(1, 5);
-      // 🆘️ el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
       const idUsuario = random(2, usuarios + 1);
 
       await connection.query(`

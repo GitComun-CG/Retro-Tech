@@ -1,3 +1,5 @@
+              
+              
                 -----------------------------------------------------     RUTAS     ---------------------------------------------------------------------
 
 
@@ -83,14 +85,19 @@
  ***             editar el perfil        ----------  solo el dueño del perfil                                                                            ***
  ***       ________________________________________________________________________________________________________________________________________      ***
  ***                                                                                                                                                     ***
- ***     ⭕️ - PUT - /usuarios/:idUsuario/constrasena                                                                                                     ***
+ ***     👍️ - PUT - /usuarios/:idUsuario/constrasena                                                                                                     ***
  ***             editar contraseña del usuario    ----------  solo el dueño del perfil                                                                   ***
  ***                                                                                                                                                     ***
     *****************************************************************************************************************************************************                                                                                                                                                    
-                                                                                                                                                             
-                PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
+
+
+         👍️ Modificar el middleware de esUsuario para asegurarnos de que los tokens creados antes de la modificación de la contraseña no sean válidos                                                                                                                                     
+         
+         
+          PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
 
                 - Enviar al mail del usuario un código para la recuperación.
                 - Usar ese código para cambiar la contraseña sin acceder previamente.
 
-                Modificar el middleware de esUsuario para asegurarnos de que los tokens creados antes de la modificación de la contraseña no sean válidos
+         👍️ - POST - /usuarios/recuperar-constrasena  
+                  enviar un correo con el código de reseteo de contraseña a un email

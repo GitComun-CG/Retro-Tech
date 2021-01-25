@@ -31,7 +31,9 @@ const {
   mostrarUsuario,
   borrarUsuario,
   editarUsuario,
-  cambiarContraseña,
+  editarContrasena,
+  recuperarContrasena,
+  resetearContrasena,
 } = require("./controladores/usuarios");
 
 // Middlewares:
@@ -125,8 +127,22 @@ app.get("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, mostrarUsuario);
 // 👍️ - DELETE - /usuarios/:idUsuario   --->   borrar un usuario
 app.delete("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, borrarUsuario);
 
-// 🆘️ - PUT - /usuarios/:idUsuar  --->  editar un usuario
+// 🆘️ - PUT - /usuarios/:idUsuario  --->  editar un usuario
 app.put("/usuarios/:idUsuario", esUsuario, elUsuarioExiste, editarUsuario);
+
+// 👍️ - PUT - /usuarios/:idUsuario/contrasena  --->  editar la contraseña de un usuario
+app.put(
+  "/usuarios/:idUsuario/contrasena",
+  esUsuario,
+  elUsuarioExiste,
+  editarContrasena
+);
+
+// 👍️ - POST - /usuarios/recuperar-contrasena  --->   envía un código de recuperación de contraseña a un email de usuario
+app.post("/usuarios/recuperar-contrasena", recuperarContrasena);
+
+// - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
+app.post("/usuarios/resetear-contrasena", resetearContrasena);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

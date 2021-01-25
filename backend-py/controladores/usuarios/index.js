@@ -4,6 +4,9 @@ const iniciarSesion = require("./iniciarSesion");
 const mostrarUsuario = require("./mostrarUsuario");
 const borrarUsuario = require("./borrarUsuario");
 const editarUsuario = require("./editarUsuario");
+const editarContrasena = require("./editarContrasena");
+const recuperarContrasena = require("./recuperarContrasena");
+const resetearContrasena = require("./resetearContrasena");
 
 module.exports = {
   crearUsuario,
@@ -12,4 +15,7 @@ module.exports = {
   mostrarUsuario,
   borrarUsuario,
   editarUsuario,
+  editarContrasena,
+  recuperarContrasena,
+  resetearContrasena,
 };

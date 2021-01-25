@@ -106,7 +106,7 @@ const editarUsuario = async (req, res, next) => {
       // Actualizar los datos finales
       await connection.query(
         `
-        UPDATE usuarios SET userName=?, nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=?, email=?, active=0, codigoRegistro=?`,
+        UPDATE usuarios SET userName=?, nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=?, email=?, active=0, codigoRegistro=?, ultimaActualizacion=?`,
         [
           userName,
           nombre,
@@ -118,6 +118,7 @@ const editarUsuario = async (req, res, next) => {
           email,
           codigoRegistro,
           idUsuario,
+          new Date(),
         ]
       );
       // Dar una respuesta si cambia el email:

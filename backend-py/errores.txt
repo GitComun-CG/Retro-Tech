@@ -1,7 +1,16 @@
-1. En el archivo 'añadirImagen.js' funciona correctamente el script pero no se sube la foto. 
-2. El archivo 'borrarAnuncio.js' creo que funciona bien (comprobar).
-3. El archivo 'editarAnuncio' tiene una dudilla.
-4. El archivo 'listarAnuncios.js' tiene varios problemas.
-5. El archivo 'mostrarAnuncio.js' también tiene algún problema.
-6. El 'initDB.js' tiene problemas y dudas pero funciona.
-7. El usuario admin no funciona. Lo crea pero no me deja iniciar sesión con él. 
+
+
+
+
+
+1. El archivo 'initDB.js' funciona correctamente pero tiene un par de dudas.
+2. El archivo 'añadirImagen.js' tiene un fallo grande.
+3. El archivo 'borrarAnuncio.js' tiene un fallo pequeño.
+4. 'borrarImagen.js' también tiene un fallito.
+5. 'listarAnuncios.js' tiene un par de dudas y un fallito.
+6. 'mostrarAnuncio.js' tiene 2 fallos: 
+    - Quiero que solo me liste los anuncios de una categoría sólo si hay algun anuncio con ese id en esa categoría, si no lo hay que de error.
+    - En 'Lista de Anuncios de una Categoría' no me muestra las fotos relacionadas con los anuncios.
+7. 'editarUsuario.js' tiene un fallo.
+8. 'resetearContrasena.js' tiene un fallo.
+9. El usuario admin no funciona. Lo crea pero no me deja iniciar sesión con él. 
