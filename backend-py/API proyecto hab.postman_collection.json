@@ -33,7 +33,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3005/comprar/2",
+							"raw": "http://localhost:3005/comprar/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -41,7 +41,7 @@
 							"port": "3005",
 							"path": [
 								"comprar",
-								"2"
+								"4"
 							]
 						}
 					},
@@ -106,7 +106,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzOTk0OCwiZXhwIjoxNjEzOTMxOTQ4fQ.dh_XiVumyUOXU2hoZSlf2nvFWMUnmoe8nDVDI-hKVfw",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTQ4MTQzMiwiZXhwIjoxNjE0MDczNDMyfQ.EgJ_z7Mqhhh6Kmu_DxARqGCd2aDftWTXeytIuH3xPk8",
 								"type": "text"
 							}
 						],
@@ -141,7 +141,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM2MTUxMSwiZXhwIjoxNjEzOTUzNTExfQ.uwt1jSKfmzIg-WL_TjNzHBAk_5lnqNB2M1hwCvUktiQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTQ4MDQyNSwiZXhwIjoxNjE0MDcyNDI1fQ.--zrMgL9gs0wLHcT7oepwpN2rgq7hxzxWXIDY6EChF4",
 								"type": "text"
 							}
 						],
@@ -176,14 +176,12 @@
 								{
 									"key": "foto1",
 									"type": "file",
-									"src": "/home/guille/Descargas/foto-sm1.jpg",
-									"disabled": true
+									"src": "/home/guille/Descargas/foto-sm1.jpg"
 								},
 								{
 									"key": "foto2",
 									"type": "file",
-									"src": "/home/guille/Descargas/foto-sm2.jpg",
-									"disabled": true
+									"src": "/home/guille/Descargas/foto-sm2.jpg"
 								},
 								{
 									"key": "foto3",
@@ -236,7 +234,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/35",
+							"raw": "http://localhost:3005/mis-anuncios/30",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -244,7 +242,7 @@
 							"port": "3005",
 							"path": [
 								"mis-anuncios",
-								"35"
+								"30"
 							]
 						}
 					},
@@ -262,7 +260,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/35/imagenes/1",
+							"raw": "http://localhost:3005/mis-anuncios/31/imagenes/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -270,7 +268,7 @@
 							"port": "3005",
 							"path": [
 								"mis-anuncios",
-								"35",
+								"31",
 								"imagenes",
 								"1"
 							]
@@ -412,12 +410,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTMzOTk0OCwiZXhwIjoxNjEzOTMxOTQ4fQ.dh_XiVumyUOXU2hoZSlf2nvFWMUnmoe8nDVDI-hKVfw",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM5NDc0MywiZXhwIjoxNjEzOTg2NzQzfQ.dkObeGCRib6AwhHUyK2SaubdfGw5xtMj-5_sQspAntA",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/usuarios/22",
+							"raw": "http://localhost:3005/usuarios/23",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -425,7 +423,7 @@
 							"port": "3005",
 							"path": [
 								"usuarios",
-								"22"
+								"23"
 							]
 						}
 					},
@@ -443,7 +441,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/usuarios/2",
+							"raw": "http://localhost:3005/usuarios/23",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -451,7 +449,177 @@
 							"port": "3005",
 							"path": [
 								"usuarios",
-								"2"
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM5ODEwOCwiZXhwIjoxNjEzOTkwMTA4fQ.YP4Z3OhWvvzqtaCwcRYVmg2prQ5NYOgIUbEY16BgBE4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userName",
+									"value": "Manolo54",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Manolo",
+									"type": "text"
+								},
+								{
+									"key": "apellidos",
+									"value": "García Lopez",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/home/guille/Descargas/Evaristo_Páramos,_2007.jpg"
+								},
+								{
+									"key": "ciudad",
+									"value": "Madrid",
+									"type": "text"
+								},
+								{
+									"key": "pais",
+									"value": "España",
+									"type": "text"
+								},
+								{
+									"key": "codigoPostal",
+									"value": "10560",
+									"type": "text"
+								},
+								{
+									"key": "fechaNacimiento",
+									"value": "1954-05-16",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "guillx.gv+2@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Contraseña de Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTM5ODE3NiwiZXhwIjoxNjEzOTkwMTc2fQ.NqHuq1K7SPEL6ABAb8nU7U3BFgpta9VgC0OWjq8Wq64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"antiguaContrasena\": \"aversifunciona1\",\n    \"nuevaContrasena\": \"aversifunciona\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios/22/contrasena",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"22",
+								"contrasena"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar Envío de Contraseña",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"guillx.gv@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios/recuperar-contrasena",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"recuperar-contrasena"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Establecer nueva contraseña ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigoRecuperacion\": \"1f476b5c5456da404b6863f8b63b8e04202f6cee\",\n    \"nuevaContraseña\": \"aversifuncionaya\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3005/usuarios/resetear-contrasena",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"usuarios",
+								"resetear-contrasena"
 							]
 						}
 					},
