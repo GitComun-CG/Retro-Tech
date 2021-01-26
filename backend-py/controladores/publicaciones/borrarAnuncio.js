@@ -29,7 +29,7 @@ const borrarAnuncio = async (req, res, next) => {
 
     // ...y del disco:
     for (const item of imagen) {
-      await borrarImagen(item.imagen);
+      await borrarImagen(item.foto);
     }
 
     // ❌️ Borrar los posibles guardados del anuncio (?):

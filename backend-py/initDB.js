@@ -147,12 +147,12 @@ async function main() {
     // --- introducir un usuario administrador ---
 
     await connection.query(`
-      INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol)
+      INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol, ultimaActualizacion)
       VALUES ("${formatDateToDB(
         new Date()
       )}", "Proyecto_hab20", "Proyecto", "HAB", "A Coruña", "España", "15100", "1995-03-24", "proyecto.hab2020@gmail.com", SHA2("${
       process.env.ADMIN_PASSWORD
-    }", 512), true, "admin");`);
+    }", 512), true, "admin", "${formatDateToDB(new Date())}");`);
 
     const usuarios = 20;
 
@@ -170,12 +170,14 @@ async function main() {
       const contraseña = faker.internet.password();
 
       await connection.query(`
-        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active)
+        INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, ultimaActualizacion)
             VALUES ("${formatDateToDB(
               now
             )}", "${userName}", "${nombre}", "${apellidos}", "${ciudad}", "${pais}", "${cp}","${formatDateToDB(
         fechaNacimiento
-      )}", "${email}", SHA2("${contraseña}", 224), true)
+      )}", "${email}", SHA2("${contraseña}", 224), true, "${formatDateToDB(
+        now
+      )}")
         `);
     }
 

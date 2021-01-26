@@ -1,6 +1,6 @@
               
               
-                -----------------------------------------------------     RUTAS     ---------------------------------------------------------------------
+               -----------------------------------------------------     RUTAS     ---------------------------------------------------------------------
 
 
 
@@ -89,11 +89,7 @@
  ***             editar contraseña del usuario    ----------  solo el dueño del perfil                                                                   ***
  ***                                                                                                                                                     ***
     *****************************************************************************************************************************************************                                                                                                                                                    
-
-
-         👍️ Modificar el middleware de esUsuario para asegurarnos de que los tokens creados antes de la modificación de la contraseña no sean válidos                                                                                                                                     
-         
-         
+                                                                                                                                          
           PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
 
                 - Enviar al mail del usuario un código para la recuperación.
