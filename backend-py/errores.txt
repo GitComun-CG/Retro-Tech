@@ -20,3 +20,4 @@ El comprador crea el objeto compra.
 El vendedor acepta o rechaza la solicitud.
 Para aceptarla tiene que cubrir obligatoriamente hora y lugar de entrega.
 
+Un usuario
