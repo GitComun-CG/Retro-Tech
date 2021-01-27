@@ -18,17 +18,16 @@ let connection;
 async function main() {
   try {
     connection = await getDB();
-    //Para que nos borre las tablas (antes de volver a crearlas):
-
-    await connection.query("DROP TABLE IF EXISTS reserva");
+    // Para que nos borre las tablas (antes de volver a crearlas):
+    await connection.query("DROP TABLE IF EXISTS valoracionUsuario");
+    await connection.query("DROP TABLE IF EXISTS interesadosAnuncio");
     await connection.query("DROP TABLE IF EXISTS guardados");
     await connection.query("DROP TABLE IF EXISTS chat");
-
+    await connection.query("DROP TABLE IF EXISTS compra");
     await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
     await connection.query("DROP TABLE IF EXISTS anuncios");
     await connection.query("DROP TABLE IF EXISTS categorias");
     await connection.query("DROP TABLE IF EXISTS usuarios");
-    // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
 
     console.log("Tablas borradas.");
 
@@ -63,8 +62,7 @@ async function main() {
     await connection.query(`
         CREATE TABLE categorias (
             idCategoria INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            nombre ENUM ('Consolas y Videojuegos', 'Informática', 'Teléfonos', 'TV y Vídeo', 'Sonido') NOT NULL        
-           
+            nombre ENUM ('Consolas y Videojuegos', 'Informática', 'Teléfonos', 'TV y Vídeo', 'Sonido') NOT NULL             
             );
         `);
     // Creamos la tabla "anuncios":
@@ -81,7 +79,12 @@ async function main() {
             foto VARCHAR(500), 
             idUsuario INT UNSIGNED NOT NULL,
                 CONSTRAINT anuncios_idUsuario_fk1
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) 
+                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario), 
+            idUsuarioComprador INT UNSIGNED,
+            CONSTRAINT anuncios_idUsuario_fk2
+                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
+            reservado BOOLEAN DEFAULT false,
+            vendido BOOLEAN DEFAULT false
             );
         `);
 
@@ -92,60 +95,63 @@ async function main() {
           fechaPublicacion DATETIME NOT NULL,
           foto VARCHAR(500) NOT NULL,
           idAnuncio INT UNSIGNED NOT NULL,
-            CONSTRAINT fotos_anuncio_idAnuncio_fk2
+            CONSTRAINT fotos_anuncio_idAnuncio_fk1
               FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio)
           );
       `);
 
-    // Creamos la tabla "reserva":
-    // 🆘️ (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)
+    // Crear la tabla "compra":
     await connection.query(`
-        CREATE TABLE reserva ( 
-            idReserva INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idUsuario_fk3
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
-            idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idAnuncio_fk3
-                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
-            reservado BOOLEAN DEFAULT false
-            );
-        `);
+      CREATE TABLE compra (
+        idCompra INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        idUsuarioComprador INT UNSIGNED NOT NULL, 
+          CONSTRAINT compra_idUsuario_fk1
+            FOREIGN KEY (idUsuarioComprador) REFERENCES usuarios(idUsuario),
+        idAnuncio INT UNSIGNED NOT NULL, 
+          CONSTRAINT compra_idAnuncio_fk2
+            FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio),
+        mensajeCompra VARCHAR(700),
+        aceptada BOOLEAN DEFAULT false,
+        horaEntrega DATETIME,
+        lugarEntrega VARCHAR(200),
+        vendido BOOLEAN DEFAULT false
+      );
+    `);
+
+    // Crear la tabla "valoracionUsuario":
+    await connection.query(`
+    CREATE TABLE valoracionUsuario (
+      idValoracion INT PRIMARY KEY AUTO_INCREMENT,
+      fecha DATETIME NOT NULL,
+      valoracion TINYINT NOT NULL,
+      idUsuarioVendedor INT UNSIGNED NOT NULL,
+        CONSTRAINT valoracionUsuario_idUsuarioVendedor_fk1
+          FOREIGN KEY (idUsuarioVendedor) REFERENCES usuarios(idUsuario),
+      idCompra INT UNSIGNED NOT NULL,
+        CONSTRAINT valoracionUsuario_idCompra_fk2
+          FOREIGN KEY (idCompra) REFERENCES compra(idCompra),
+      CONSTRAINT valoracionUsuario_CK1 CHECK (valoracion IN (1,2,3,4,5))
+    );
+  `);
 
     // Creamos la tabla "guardados":
     await connection.query(`
         CREATE TABLE guardados (
             idGuardado INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT guardados_idUsuario_fk3
+                CONSTRAINT guardados_idUsuario_fk1
                     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
             idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idAnuncio_fk4 
+                CONSTRAINT reserva_idAnuncio_fk2
                     FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
+            guardado BOOLEAN DEFAULT false,
             fechaGuardado DATETIME NOT NULL
-            );
-        `);
-
-    // Creamos la tabla "chat":
-    await connection.query(`
-        CREATE TABLE chat (
-            idChat INT PRIMARY KEY AUTO_INCREMENT,
-            mensaje VARCHAR(500) NOT NULL,
-            fechaEnviado DATETIME NOT NULL,
-            idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT chat_idUsuario_fk4
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
             );
         `);
 
     console.log("Tablas creadas.");
 
-    // Ahora introducimos datos iniciales de prueba (con "faker" y "lodash"):
-
-    // DATOS DE PRUEBA TABLA "usuarios":
-
     // --- introducir un usuario administrador ---
-
     await connection.query(`
       INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol, ultimaActualizacion)
       VALUES ("${formatDateToDB(
@@ -154,6 +160,7 @@ async function main() {
       process.env.ADMIN_PASSWORD
     }", 512), true, "admin", "${formatDateToDB(new Date())}");`);
 
+    // DATOS DE PRUEBA TABLA "usuarios":
     const usuarios = 20;
 
     for (let i = 0; i < usuarios; i++) {
@@ -217,19 +224,37 @@ async function main() {
     // 🆘️ Lo he arreglado con la variable 'nombres' y poniendo que son 6 categorias ( 1 de más ) ya que los arrays empiezan en 0, pero creo que no es así. PREGUNTAR POR SI ACASO.
     console.log("Datos de prueba introducidos en la tabla 'categorias'.");
 
-    // DATOS DE PRUEBA TABLA "reserva":
-    const reservas = 20;
+    // DATOS DE PRUEBA TABLA "compra":
+    const compra = 10;
 
-    for (let i = 0; i < reservas; i++) {
-      const idUsuario = random(2, usuarios + 1);
+    for (let i = 0; i < compra; i++) {
+      const idUsuarioComprador = random(2, usuarios + 1);
       const idAnuncio = random(1, anuncios);
+      const mensajeCompra = faker.lorem.sentence();
 
       await connection.query(`
-            INSERT INTO reserva (idUsuario, idAnuncio)
-                VALUES ("${idUsuario}", "${idAnuncio}")`);
+        INSERT INTO compra (idUsuarioComprador, idAnuncio, mensajeCompra) VALUES ("${idUsuarioComprador}", "${idAnuncio}", "${mensajeCompra}")`);
     }
 
-    console.log("Datos de prueba introducidos en la tabla 'reserva'.");
+    console.log("Datos de prueba introducidor en la tabla 'compra'.");
+
+    // DATOS DE PRUEBA TABLA "valoracionUsuario":
+    const valoraciones = 8;
+
+    for (let index = 0; index < valoraciones; index++) {
+      const now = new Date();
+
+      await connection.query(`
+        INSERT INTO valoracionUsuario(fecha, valoracion, idUsuarioVendedor, idCompra)
+        VALUES("${formatDateToDB(now)}","${random(1, 5)}","${random(
+        1,
+        usuarios
+      )}", "${random(2, compra + 1)}")
+      `);
+    }
+    console.log(
+      "Datos de prueba introducidos en la tabla 'valoracionUsuario'."
+    );
 
     // DATOS DE PRUEBA TABLA "guardados":
     const guardados = 10;
@@ -247,29 +272,12 @@ async function main() {
     }
 
     console.log("Datos de prueba introducidos en la tabla 'guardados'.");
-    // DATOS DE PRUEBA TABLA "chat":
-    const mensajes = 20;
 
-    for (let i = 0; i < mensajes; i++) {
-      const mensaje = faker.lorem.sentence();
-      const now = new Date();
-      const idUsuario = random(2, usuarios + 1);
-
-      await connection.query(`
-            INSERT INTO chat (mensaje, fechaEnviado, idUsuario)
-                VALUES ("${mensaje}", "${formatDateToDB(
-        now
-      )}", "${idUsuario}")`);
-    }
-
-    console.log("Datos de prueba introducidos en la tabla 'chat'.");
-  } catch (error) {
-    console.error(error);
+    //
   } finally {
     // Libera la conexión
     if (connection) connection.release();
     process.exit();
   }
 }
-
 main();

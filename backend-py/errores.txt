@@ -1,4 +1,4 @@
-
+`
 
 
 
@@ -13,4 +13,10 @@
     - En 'Lista de Anuncios de una Categoría' no me muestra las fotos relacionadas con los anuncios.
 7. 'editarUsuario.js' tiene un fallo.
 8. 'resetearContrasena.js' tiene un fallo.
+
+
+- Tabla compra.
+El comprador crea el objeto compra.
+El vendedor acepta o rechaza la solicitud.
+Para aceptarla tiene que cubrir obligatoriamente hora y lugar de entrega.
 

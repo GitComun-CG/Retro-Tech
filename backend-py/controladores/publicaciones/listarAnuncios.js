@@ -20,9 +20,7 @@ const listarAnuncios = async (req, res, next) => {
     if (search) {
       [results] = await connection.query(
         `
-        SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
-        INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
-        WHERE anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ? OR anuncios.precio LIKE ? OR anuncios.localidad OR anuncios.categoria;`,
+        SELECT * FROM `,
         [
           `%${search}%`,
           `%${search}%`,
