@@ -14,10 +14,11 @@ async function main() {
   try {
     connection = await getDB();
     //Para que nos borre las tablas (antes de volver a crearlas):
-
+    await connection.query("DROP TABLE IF EXISTS valoracionUsuario");
     await connection.query("DROP TABLE IF EXISTS guardados");
     await connection.query("DROP TABLE IF EXISTS reserva");
     await connection.query("DROP TABLE IF EXISTS compra");
+
     await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
     await connection.query("DROP TABLE IF EXISTS anuncios");
     await connection.query("DROP TABLE IF EXISTS usuarios");
@@ -25,6 +26,7 @@ async function main() {
 
     // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
     console.log("Tablas borradas.");
+
     // Creamos la tabla "usuarios":
     await connection.query(`
         CREATE TABLE usuarios (
@@ -69,11 +71,14 @@ async function main() {
             precio DECIMAL(8, 2) DEFAULT 0.0 NOT NULL,
             provincia VARCHAR(300) NOT NULL,
             localidad VARCHAR(300) NOT NULL,
-            idCategoria INT UNSIGNED NOT NULL,    
+            idCategoria INT UNSIGNED NOT NULL,
+              CONSTRAINT anuncios_idCategoria_fk1 
+                FOREIGN KEY (idCategoria) REFERENCES categorias(idCategoria),   
             foto VARCHAR(500), 
             idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT anuncios_idUsuario_fk1
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) 
+                CONSTRAINT anuncios_idUsuario_fk2
+                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
+            reservado BOOLEAN DEFAULT false
             );
         `);
     // Creamos la tabla "fotos_anuncio":
@@ -112,7 +117,7 @@ async function main() {
         idValoracion INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         fechaValoracion DATETIME NOT NULL,
         idUsuarioVendedor INT UNSIGNED NOT NULL,
-          CONSTRAINT valoracionUsuario_idUsuarioVendedor_fk2
+          CONSTRAINT valoracionUsuario_idUsuarioVendedor_fk1
             FOREIGN KEY (idUsuarioVendedor) REFERENCES usuarios(idUsuario),
         idCompra INT UNSIGNED NOT NULL,
           CONSTRAINT valoracionUsuario_idCompra_fk2
@@ -186,6 +191,19 @@ async function main() {
         `);
     }
     console.log("Datos de prueba introducidos en la tabla 'usuarios'.");
+
+    // DATOS DE PRUEBA TABLA "categorias":
+    const categorias = 6;
+    for (let i = 1; i < categorias; i++) {
+      const nombres = [i];
+
+      await connection.query(`
+             INSERT INTO categorias (nombre)
+                 VALUES ( "${nombres}")`);
+    }
+
+    console.log("Datos de prueba introducidos en la tabla 'categorias'.");
+
     // DATOS DE PRUEBA TABLA "anuncios":
     const anuncios = 30;
     for (let i = 0; i < anuncios; i++) {
@@ -195,9 +213,7 @@ async function main() {
       const precio = random(10, 10000);
       const provincia = faker.address.state();
       const localidad = faker.address.city();
-      // 🆘️ --- Si quiero que en vez de idCategoria aparezca nombreCategoria (con el nombre completo) ¿Cómo se hace eso? ---
       const idCategoria = random(1, 5);
-      // 🆘️ el idUsuario se tiene que poner de otra forma para que coja el id de un usuario existente (creo)
       const idUsuario = random(2, usuarios + 1);
 
       await connection.query(`
@@ -207,23 +223,47 @@ async function main() {
                 )}", "${titulo}", "${descripcion}", "${precio}", "${provincia}", "${localidad}", "${idCategoria}", "${idUsuario}")`);
     }
     console.log("Datos de prueba introducidos en la tabla 'anuncios'.");
-    // DATOS DE PRUEBA TABLA "categorias":
-    const categorias = 6;
-    for (let i = 1; i < categorias; i++) {
-      const nombres = [i];
+
+    // DATOS DE PRUEBA TABLA "compra":
+    const compra = 50;
+
+    for (let i = 0; i < compra; i++) {
+      const idUsuarioComprador = random(2, usuarios + 1);
+      const idAnuncio = random(1, anuncios);
+
       await connection.query(`
-            INSERT INTO categorias (nombre)
-                VALUES ( "${nombres}")`);
+        INSERT INTO compra (idUsuarioComprador, idAnuncio) 
+        VALUES ("${idUsuarioComprador}", "${idAnuncio}")`);
     }
 
-    //  --- solo me sale la categoría "Consolas y Videojuegos" en la base de datos. ¿Cómo se hace para que me las ponga todas? ---
-    // 🆘️ Lo he arreglado con la variable 'nombres' y poniendo que son 6 categorias ( 1 de más ) ya que los arrays empiezan en 0, pero creo que no es así. PREGUNTAR POR SI ACASO.
-    console.log("Datos de prueba introducidos en la tabla 'categorias'.");
+    console.log("Datos de prueba introducidos en la tabla 'compra'.");
+
+    // DATOS DE PRUEBA TABLA "valoracionUsuario":
+    const valoraciones = 50;
+
+    for (let i = 0; i < valoraciones; i++) {
+      const now = new Date();
+      const idUsuarioVendedor = random(2, usuarios + 1);
+      const idCompra = random(1, compra);
+      const valoracion = random(1, 5);
+
+      await connection.query(`
+        INSERT INTO valoracionUsuario (fechaValoracion, idUsuarioVendedor, idCompra, valoracion)
+        VALUES ("${formatDateToDB(
+          now
+        )}", "${idUsuarioVendedor}", "${idCompra}", "${valoracion}")`);
+    }
+
+    console.log(
+      "Datos de prueba introducidos en la tabla 'valoracionUsuario'."
+    );
+
     // DATOS DE PRUEBA TABLA "reserva":
     const reservas = 20;
     for (let i = 0; i < reservas; i++) {
       const idUsuario = random(2, usuarios + 1);
       const idAnuncio = random(1, anuncios);
+
       await connection.query(`
             INSERT INTO reserva (idUsuario, idAnuncio)
                 VALUES ("${idUsuario}", "${idAnuncio}")`);
