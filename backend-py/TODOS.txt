@@ -1,0 +1,18 @@
+
+    - Falta hacer los filtros de precio y localidad.
+    - Terminar los endpoints 
+        
+
+
+
+
+PLANTEAMIENTO RESERVAS:
+
+Un usuario interesado en un anuncio hace clic en el botón 'solicitar reserva'. 
+Aparece un cuadro para confirmar con un campo para mensaje donde puede escribir algo y clica en enviar.
+Al hacer clic en enviar aparece un campo en su perfil (mis reservas) en modo 'pendiente' (pendiente de aceptar o rechazar por el vendedor)
+Al usuario vendedor le llega a su perfil (al campo solicitudes) una solicitud que puede aceptar o rechazar.
+Si la rechaza, la solicitud desaparece del perfil del vendedor y manda un aviso al usuario comprador de que ha sido rechazada la solicitud.
+Si el vendedor acepta la solicitud de reserva, le aparece un cuadro (formulario) con el campo mensaje donde puede responder al comprador.
+Despues de quedar con el comprador y realizar el intercambio, el vendedor marca el anuncio como "vendido"
+

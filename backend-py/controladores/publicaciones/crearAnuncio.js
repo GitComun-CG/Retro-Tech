@@ -1,5 +1,5 @@
 // SCRIPT PARA CREAR UN ANUNCIO NUEVO Y PARA SUBIR UNA IMAGEN
-// - GET - /subir
+// - POST - /subir
 
 const getDB = require("../../db");
 const { formatDateToDB, guardarImagen } = require("../../helpers");

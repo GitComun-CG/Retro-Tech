@@ -35,7 +35,7 @@ const esUsuario = async (req, res, next) => {
       SELECT ultimaActualizacion FROM usuarios WHERE idUsuario=?`,
       [tokenInfo.id]
     );
-    console.log(result);
+
     // Cambiar el formato de fecha de cambio de email o contraseña:
     const ultimaActualizacion = new Date(result[0].ultimaActualizacion);
 

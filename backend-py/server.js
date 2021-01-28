@@ -141,7 +141,7 @@ app.put(
 // 👍️ - POST - /usuarios/recuperar-contrasena  --->   envía un código de recuperación de contraseña a un email de usuario
 app.post("/usuarios/recuperar-contrasena", recuperarContrasena);
 
-// - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
+// 👍️ - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
 app.post("/usuarios/resetear-contrasena", resetearContrasena);
 
 // Crear middlewar de error:

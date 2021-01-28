@@ -13,18 +13,15 @@ let connection;
 async function main() {
   try {
     connection = await getDB();
+
     //Para que nos borre las tablas (antes de volver a crearlas):
     await connection.query("DROP TABLE IF EXISTS valoracionUsuario");
-    await connection.query("DROP TABLE IF EXISTS guardados");
-    await connection.query("DROP TABLE IF EXISTS reserva");
     await connection.query("DROP TABLE IF EXISTS compra");
-
     await connection.query("DROP TABLE IF EXISTS fotos_anuncio");
     await connection.query("DROP TABLE IF EXISTS anuncios");
     await connection.query("DROP TABLE IF EXISTS usuarios");
     await connection.query("DROP TABLE IF EXISTS categorias");
 
-    // 🆘️ (DUDA) Para que funcionase he tenido que mover las tablas de esta manera. Poniéndolas por orden me daba un error ("Cannot drop table 'usuarios' referenced by a foreign key constraint 'anuncios_idUsuario_fk1' on table 'anuncios'.)
     console.log("Tablas borradas.");
 
     // Creamos la tabla "usuarios":
@@ -54,6 +51,7 @@ async function main() {
             codigoRecuperacion VARCHAR(100)
             );
         `);
+
     // Creamos la tabla "categorias"
     await connection.query(`
         CREATE TABLE categorias (
@@ -61,6 +59,7 @@ async function main() {
             nombre ENUM('Consolas y Videojuegos', 'Informática', 'Teléfonos', 'TV y Vídeo', 'Sonido') NOT NULL        
             );
         `);
+
     // Creamos la tabla "anuncios":
     await connection.query(`
         CREATE TABLE anuncios (
@@ -78,9 +77,11 @@ async function main() {
             idUsuario INT UNSIGNED NOT NULL,
                 CONSTRAINT anuncios_idUsuario_fk2
                     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
-            reservado BOOLEAN DEFAULT false
+            reservado BOOLEAN DEFAULT false,
+            vendido BOOLEAN DEFAULT false
             );
         `);
+
     // Creamos la tabla "fotos_anuncio":
     await connection.query(`
       CREATE TABLE fotos_anuncio (
@@ -103,7 +104,7 @@ async function main() {
       idAnuncio INT UNSIGNED NOT NULL, 
         CONSTRAINT compra_idAnuncio_fk2
           FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio),
-      mensajeCompra VARCHAR(700),
+      mensajeCompra VARCHAR(500),
       aceptada BOOLEAN DEFAULT false,
       horaEntrega DATETIME,
       lugarEntrega VARCHAR(200),
@@ -127,39 +128,9 @@ async function main() {
             CHECK (valoracion >= 1 OR valoracion <= 5)
    );
  `);
-
-    // Creamos la tabla "reserva":
-    // 🆘️ (DUDA) ¿"reservado" es NULL o NOT NULL? No se sabe si va a ser true hasta que el usuario reserve...(?)
-    await connection.query(`
-        CREATE TABLE reserva ( 
-            idReserva INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idUsuario_fk1
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
-            idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT reserva_idAnuncio_fk2
-                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio) ON DELETE CASCADE,
-            reservado BOOLEAN DEFAULT false
-            );
-        `);
-
-    // Creamos la tabla "guardados":
-    await connection.query(`
-        CREATE TABLE guardados (
-            idGuardado INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idUsuario INT UNSIGNED NOT NULL,
-                CONSTRAINT guardados_idUsuario_fk1
-                    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
-            idAnuncio INT UNSIGNED NOT NULL,
-                CONSTRAINT guardados_idAnuncio_fk2
-                    FOREIGN KEY (idAnuncio) REFERENCES anuncios(idAnuncio),
-            fechaGuardado DATETIME NOT NULL
-            );
-        `);
-
     console.log("Tablas creadas.");
     // Ahora introducimos datos iniciales de prueba (con "faker" y "lodash"):
-    // DATOS DE PRUEBA TABLA "usuarios":
+
     // --- introducir un usuario administrador ---
     await connection.query(`
       INSERT INTO usuarios (fechaRegistro, userName, nombre, apellidos, ciudad, pais, codigoPostal, fechaNacimiento, email, contraseña, active, rol)
@@ -168,6 +139,8 @@ async function main() {
       )}", "Proyecto_hab20", "Proyecto", "HAB", "A Coruña", "España", "15100", "1995-03-24", "proyecto.hab2020@gmail.com", SHA2("${
       process.env.ADMIN_PASSWORD
     }", 512), true, "admin");`);
+
+    // DATOS DE PRUEBA TABLA "usuarios":
     const usuarios = 20;
     for (let i = 0; i < usuarios; i++) {
       // -- pasamos la fecha de formato js a formato SQL con "date-fns" y el archivo "helpers.js" ---
@@ -257,31 +230,6 @@ async function main() {
     console.log(
       "Datos de prueba introducidos en la tabla 'valoracionUsuario'."
     );
-
-    // DATOS DE PRUEBA TABLA "reserva":
-    const reservas = 20;
-    for (let i = 0; i < reservas; i++) {
-      const idUsuario = random(2, usuarios + 1);
-      const idAnuncio = random(1, anuncios);
-
-      await connection.query(`
-            INSERT INTO reserva (idUsuario, idAnuncio)
-                VALUES ("${idUsuario}", "${idAnuncio}")`);
-    }
-    console.log("Datos de prueba introducidos en la tabla 'reserva'.");
-    // DATOS DE PRUEBA TABLA "guardados":
-    const guardados = 10;
-    for (let i = 0; i < guardados; i++) {
-      const now = new Date();
-      const idUsuario = random(2, usuarios + 1);
-      const idAnuncio = random(1, anuncios);
-      await connection.query(`
-            INSERT INTO guardados (idUsuario, idAnuncio, fechaGuardado)
-                VALUES ("${idUsuario}", "${idAnuncio}", "${formatDateToDB(
-        now
-      )}")`);
-    }
-    console.log("Datos de prueba introducidos en la tabla 'guardados'.");
   } catch (error) {
     console.error(error);
   } finally {
