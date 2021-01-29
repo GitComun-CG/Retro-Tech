@@ -7,6 +7,7 @@ const editarUsuario = require("./editarUsuario");
 const editarContrasena = require("./editarContrasena");
 const recuperarContrasena = require("./recuperarContrasena");
 const resetearContrasena = require("./resetearContrasena");
+const listarMisAnuncios = require("./listarMisAnuncios");
 
 module.exports = {
   crearUsuario,
@@ -18,4 +19,5 @@ module.exports = {
   editarContrasena,
   recuperarContrasena,
   resetearContrasena,
+  listarMisAnuncios,
 };

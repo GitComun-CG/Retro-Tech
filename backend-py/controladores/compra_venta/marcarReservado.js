@@ -14,38 +14,40 @@ const marcarReservado = async (req, res, next) => {
 
     const { lugarEntrega, horaEntrega } = req.body;
     const { idAnuncio, idCompra } = req.params;
-
+    // Seleccionar el idCompra:
     const [compra] = await connection.query(
       `
       SELECT idCompra FROM compra WHERE idCompra=?`,
       [idCompra]
     );
-
+    // Si la solicitud de compra no existe lanza error:
     if (compra.length === 0) {
       const error = new Error("No existe la solicitud de compra.");
       error.httpStatus = 404;
       throw error;
     }
 
+    // Seleccionar el anuncio que está reservado:
     const [reservado] = await connection.query(
       `
       SELECT idAnuncio FROM anuncios WHERE idAnuncio=? AND reservado=true`,
       [idAnuncio]
     );
 
-    // Cada producto solo puede ser reservado 1 vez:
+    // Cada producto solo puede ser marcado como reservado 1 vez:
     if (reservado.length != 0) {
-      const error = new Error("El producto ya está reservado.");
+      const error = new Error("El producto ya ha sido reservado.");
       error.httpStatus = 404;
       throw error;
     }
-
+    // El comprador añade un lugar y hora de entrega
     await connection.query(
       `
       UPDATE compra SET lugarEntrega=?, horaEntrega=?, aceptada=true WHERE idCompra=?`,
       [lugarEntrega, horaEntrega, idCompra]
     );
 
+    // Marcar como reservado el anuncio:
     await connection.query(
       `
       UPDATE anuncios SET reservado=true WHERE idAnuncio=?`,
