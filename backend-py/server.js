@@ -36,6 +36,12 @@ const {
   resetearContrasena,
 } = require("./controladores/usuarios");
 
+// **************** CONTROLADORES COMPRA_VENTA
+const {
+  proponerCompra,
+  marcarReservado,
+} = require("./controladores/compra_venta");
+
 // Middlewares:
 const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
 const elUsuarioExiste = require("./middlewares/elUsuarioExiste");
@@ -143,6 +149,20 @@ app.post("/usuarios/recuperar-contrasena", recuperarContrasena);
 
 // 👍️ - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
 app.post("/usuarios/resetear-contrasena", resetearContrasena);
+
+/*
+RUTAS DE LA API PARA COMPRA_VENTA
+                                 */
+// proponer compra
+app.post(
+  "/comprar/:idCategoria/:idAnuncio/proponer-compra",
+  elAnuncioExiste,
+  esUsuario,
+  proponerCompra
+);
+
+// marcar reservado
+app.put("/mis-anuncios/:idAnuncio/solicitudes/:idCompra", marcarReservado);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

@@ -22,7 +22,7 @@ const listarAnuncios = async (req, res, next) => {
         `
         SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
-        WHERE anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ?;`,
+        WHERE anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ? AND anuncios.vendido = false;`,
         [`%${search}%`, `%${search}%`]
       );
     } else {
@@ -30,7 +30,7 @@ const listarAnuncios = async (req, res, next) => {
         `
         SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.foto, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
-         WHERE anuncios.idCategoria = ?;`,
+         WHERE anuncios.idCategoria = ? AND anuncios.vendido = false;`,
         [idCategoria]
       );
     }
