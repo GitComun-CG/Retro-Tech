@@ -50,12 +50,10 @@
  ***              borra un anuncio y su contenido (fotos, etc)         ---------    👍️   CON TOKEN Y COMPROBACIÓN DE USUARIO (o admin)                   ***
  ***       ________________________________________________________________________________________________________________________________________      ***
  ***                                                                                                                                                     ***
- ***     ⭕️ - POST - /mis-anuncios/guardados                                                                                                             ***
- ***              lista de anuncios guardados                                                                                                            ***
+ ***                                                                                                           ***
  ***      _________________________________________________________________________________________________
                                                                                                      
-            - GET - /mis-anuncios/vendidos 
-                  lista los anuncios vendidos de un usuario   
+           
          ____________________________________________________________________________________________________                                                                                    
             
             - GET - /mis-anuncios/publicados
@@ -104,3 +102,34 @@
 
          👍️ - POST - /usuarios/recuperar-constrasena  
                   enviar un correo con el código de reseteo de contraseña a un email
+
+
+
+
+
+
+                  ⭕️ borrarSolicitudCompra
+                     - - DELETE - /mis-anuncios/:idAnuncio/solicitudes
+
+                  ⭕️ listarMisReservas
+                     - GET - /mis-anuncios/mis-reservas/:idCompra
+
+                  ⭕️ listarSolicitudesCompra
+                     - GET - /mis-anuncios/:idAnuncio/solicitudes
+
+                  👍️ marcarReservado
+                     - PUT - /comprar/:idAnuncio/reservar
+
+                  👍️ marcarVendido
+                     - PUT - /mis-anuncios/:idAnuncio/:idCompra/vendido
+
+                  👍️ proponerCompra
+                     - PUT - /comprar/:idAnuncio/:idUsuario/proponer-compra
+
+                  ⭕️ valorarCompra
+                     - POST - /usuarios/:idUsuario/valorar/:idCompra
+
+                  👍️🆘️ listarMisAnuncios
+                     - GET - /usuarios/mis-anuncios
+
+                  👍️ middleware existeCompra

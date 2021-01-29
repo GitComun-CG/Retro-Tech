@@ -34,12 +34,14 @@ const {
   editarContrasena,
   recuperarContrasena,
   resetearContrasena,
+  listarMisAnuncios,
 } = require("./controladores/usuarios");
 
 // **************** CONTROLADORES COMPRA_VENTA
 const {
   proponerCompra,
   marcarReservado,
+  marcarVendido,
 } = require("./controladores/compra_venta");
 
 // Middlewares:
@@ -47,6 +49,7 @@ const elAnuncioExiste = require("./middlewares/elAnuncioExiste");
 const elUsuarioExiste = require("./middlewares/elUsuarioExiste");
 const esUsuario = require("./middlewares/esUsuario");
 const puedeEditar = require("./middlewares/puedeEditar");
+const existeCompra = require("./middlewares/existeCompra");
 
 const { PORT } = process.env;
 
@@ -75,6 +78,9 @@ app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 
 // 👍️ POST - /subir  : para crear un anuncio (TOKEN)
 app.post("/subir", esUsuario, crearAnuncio);
+
+// - GET - /mis-anuncios/:idAnuncio
+app.get("/mis-anuncios/::idUsuario/:idAnuncio");
 
 // 👍️ PUT - /mis-anuncios/:idAnuncio : para editar un anuncio (TOKEN)
 app.put(
@@ -150,6 +156,8 @@ app.post("/usuarios/recuperar-contrasena", recuperarContrasena);
 // 👍️ - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
 app.post("/usuarios/resetear-contrasena", resetearContrasena);
 
+// listarMisAnuncios
+app.get("/mis-anuncios", esUsuario, listarMisAnuncios);
 /*
 RUTAS DE LA API PARA COMPRA_VENTA
                                  */
@@ -162,7 +170,18 @@ app.post(
 );
 
 // marcar reservado
-app.put("/mis-anuncios/:idAnuncio/solicitudes/:idCompra", marcarReservado);
+app.put(
+  "/mis-anuncios/:idAnuncio/solicitudes/:idCompra",
+  existeCompra,
+  marcarReservado
+);
+
+// marcar vendido
+app.put(
+  "/mis-anuncios/:idAnuncio/:idCompra/vendido",
+  existeCompra,
+  marcarVendido
+);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

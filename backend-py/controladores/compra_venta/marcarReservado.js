@@ -1,9 +1,10 @@
-// SCRIPT PARA SOLICITAR RESERVAR UN ANUNCIO
-// - PUT - /comprar/:idAnuncio/reservar
+// SCRIPT RESERVAR UN ANUNCIO
+// - PUT - /comprar/:idAnuncio/reservar  // /mis-anuncios/:idAnuncio/solicitudes/:idCompra
 
 // Editar tabla anuncio y cambiar reservado a 'true'
 // Editar tabla compra indicando lugar y fecha de entrega y cambiando aceptada=true
 
+//mis-anuncios/2/solicitudes/5
 const getDB = require("../../db");
 
 const marcarReservado = async (req, res, next) => {

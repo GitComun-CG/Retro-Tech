@@ -1,5 +1,6 @@
-// SELECT idAnuncio, idUsuario FROM anuncios WHERE idAnuncio=? AND idUsuario=?, [idAnuncio, idUsuario]
+// Funciona pero mal (da un 200 pero no muestra el array de anuncios de ese usuario)
 
+// - GET - /mis-anuncios
 const getDB = require("../../db");
 
 const listarMisAnuncios = async (req, res, next) => {
@@ -8,20 +9,20 @@ const listarMisAnuncios = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const { idAnuncio, idUsuario } = req.params;
+    const { idUsuario } = req.params;
 
-    const [result] = await connection.query(
-      `
-          SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario 
-          FROM anuncios LEFT JOIN usuarios ON (anuncios.idAnuncio = usuarios.idUsuario)
-          WHERE anuncios.idAnuncio = ?;`,
-      [idAnuncio, idUsuario]
+    const [anuncios] = await connection.query(
+      `SELECT  * FROM anuncios
+      INNER JOIN usuarios ON (anuncios.idUsuario = anuncios.idUsuario)
+       WHERE anuncios.idUsuario=? AND anuncios.vendido = false;`,
+      [idUsuario]
     );
 
     res.send({
       status: "ok",
       data: {
-        result,
+        idUsuario: idUsuario,
+        anuncios: anuncios,
       },
     });
   } catch (error) {

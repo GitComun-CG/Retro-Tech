@@ -1,6 +1,7 @@
 // Insert en la tabla compra cubrir los campos idAnuncio, idUsuarioComprador, mensajeCompra
 // SCRIPT PARA PERMITIR A UN USUARIO SOLICITAR LA RESERVA DE UN ARTÍCULO
 // Un usuario manda una solicitud de reserva que el vendedor podra aceptar o no.
+// - PUT - /comprar/:idAnuncio/:idUsuario/proponer-compra
 
 const getDB = require("../../db");
 

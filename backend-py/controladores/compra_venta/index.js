@@ -1,9 +1,9 @@
-const marcarVendido = require("./marcarVendido");
 const proponerCompra = require("./proponerCompra");
 const marcarReservado = require("./marcarReservado");
+const marcarVendido = require("./marcarVendido");
 
 module.exports = {
-  marcarVendido,
   proponerCompra,
   marcarReservado,
+  marcarVendido,
 };
