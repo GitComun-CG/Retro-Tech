@@ -1,6 +1,6 @@
 // Funciona pero mal (da un 200 pero no muestra el array de anuncios de ese usuario)
 
-// - GET - /mis-anuncios
+// - GET - /mis-anuncios/:idUsuario
 const getDB = require("../../db");
 
 const listarMisAnuncios = async (req, res, next) => {

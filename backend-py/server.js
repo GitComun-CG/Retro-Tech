@@ -63,6 +63,8 @@ app.use(bodyParser.json());
 // Body parser (multipart form data <- subida de imágenes):
 app.use(fileUpload());
 
+//______________________________________________________________________________________________________________//
+
 /* 
  RUTAS DE LA API PARA PUBLICACIONES:
                                     */
@@ -79,8 +81,8 @@ app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 // 👍️ POST - /subir  : para crear un anuncio (TOKEN)
 app.post("/subir", esUsuario, crearAnuncio);
 
-// - GET - /mis-anuncios/:idAnuncio
-app.get("/mis-anuncios/::idUsuario/:idAnuncio");
+// listar mis anuncios - GET - /mis-anuncios/:idAnuncio
+app.get("/mis-anuncios/:idUsuario");
 
 // 👍️ PUT - /mis-anuncios/:idAnuncio : para editar un anuncio (TOKEN)
 app.put(
@@ -120,6 +122,8 @@ app.delete(
   borrarImagen
 );
 
+// _____________________________________________________________________________________________________________ //
+
 /*
 RUTAS DE LA API PARA USUARIOS
                             */
@@ -158,6 +162,9 @@ app.post("/usuarios/resetear-contrasena", resetearContrasena);
 
 // listarMisAnuncios
 app.get("/mis-anuncios", esUsuario, listarMisAnuncios);
+
+// _________________________________________________________________________________________________________________________ //
+
 /*
 RUTAS DE LA API PARA COMPRA_VENTA
                                  */
@@ -182,6 +189,9 @@ app.put(
   existeCompra,
   marcarVendido
 );
+
+// borrar solicitud de reserva
+app.delete("/mis-anuncios/:idAnuncio/:idCompra/solicitudes");
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {
