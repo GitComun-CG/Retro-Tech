@@ -211,21 +211,21 @@ async function main() {
 
     console.log("Datos de prueba introducidos en la tabla 'compra'.");
 
-    // DATOS DE PRUEBA TABLA "valoracionUsuario":
-    const valoraciones = 50;
+    // // DATOS DE PRUEBA TABLA "valoracionUsuario":
+    // const valoraciones = 50;
 
-    for (let i = 0; i < valoraciones; i++) {
-      const now = new Date();
-      const idUsuarioVendedor = random(2, usuarios + 1);
-      const idCompra = random(1, compra);
-      const valoracion = random(1, 5);
+    // for (let i = 0; i < valoraciones; i++) {
+    //   const now = new Date();
+    //   const idUsuarioVendedor = random(2, usuarios + 1);
+    //   const idCompra = random(1, compra);
+    //   const valoracion = random(1, 5);
 
-      await connection.query(`
-        INSERT INTO valoracionUsuario (fechaValoracion, idUsuarioVendedor, idCompra, valoracion)
-        VALUES ("${formatDateToDB(
-          now
-        )}", "${idUsuarioVendedor}", "${idCompra}", "${valoracion}")`);
-    }
+    //   await connection.query(`
+    //     INSERT INTO valoracionUsuario (fechaValoracion, idUsuarioVendedor, idCompra, valoracion)
+    //     VALUES ("${formatDateToDB(
+    //       now
+    //     )}", "${idUsuarioVendedor}", "${idCompra}", "${valoracion}")`);
+    // }
 
     console.log(
       "Datos de prueba introducidos en la tabla 'valoracionUsuario'."

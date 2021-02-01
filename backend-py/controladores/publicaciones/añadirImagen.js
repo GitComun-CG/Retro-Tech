@@ -1,6 +1,6 @@
 // SCRIPT PARA AÑADIR IMÁGENES A UN ANUNCIO
 // - POST - /mis-anuncio/:idAnuncio/imagenes
-// 🆘️🆘️🆘️ EL SCRIPT FUNCIONA (da un 200 si existe el anuncio y un 404 si no) PERO NO AÑADE LA FOTO
+
 const getDB = require("../../db");
 const { guardarImagen, formatDateToDB } = require("../../helpers");
 
@@ -28,21 +28,32 @@ const añadirImagen = async (req, res, next) => {
     }
 
     let imagenGuardada;
+    const now = new Date();
 
-    if (req.files && req.files.foto) {
-      // guardar la foto en disco
-      imagenGuardada = await guardarImagen(req.files.foto);
+    const images = [];
 
-      const now = new Date();
-      // insertar la foto nueva a la tabla 'fotos_anuncio'
-      await connection.query(
-        `
-        INSERT INTO fotos_anuncio(fechaPublicacion, foto, idAnuncio)
+    if (req.files && Object.keys(req.files).length > 0) {
+      for (const imageData of Object.values(req.files).slice(0, 5)) {
+        // Guardar la imágen con el nombre del fichero:
+        const imageFile = await guardarImagen(imageData);
+
+        images.push(imageFile);
+        // Meter una nueva entrada en la tabla 'fotos_anuncio':
+        await connection.query(
+          `
+            INSERT INTO fotos_anuncio(fechaPublicacion, foto, idAnuncio)
             VALUES (?, ?, ?);`,
-        [formatDateToDB(now), imagenGuardada, idAnuncio]
-      );
-    }
+          [formatDateToDB(now), imageFile, idAnuncio]
+        );
 
+        // Para separar los nombres de las fotos:
+        if (imagenGuardada === undefined) {
+          imagenGuardada = imageFile;
+        } else {
+          imagenGuardada += ";" + imageFile;
+        }
+      }
+    }
     res.send({
       status: "ok",
       data: {

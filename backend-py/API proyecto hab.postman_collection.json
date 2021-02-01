@@ -14,12 +14,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3005/comprar",
+							"raw": "http://localhost:3000/comprar",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"comprar"
 							]
@@ -33,15 +33,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3005/comprar/4",
+							"raw": "http://localhost:3000/comprar/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"comprar",
-								"4"
+								"5"
 							]
 						}
 					},
@@ -53,25 +53,37 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3005/comprar/1?search=range",
+							"raw": "http://localhost:3000/comprar/1?search=most&precioMinimo=0&precioMaximo=99999999999999&localidad=Howebury",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"comprar",
 								"1"
 							],
 							"query": [
 								{
-									"key": "order",
-									"value": "fechaPublicacion",
+									"key": "",
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "search",
-									"value": "range"
+									"value": "most"
+								},
+								{
+									"key": "precioMinimo",
+									"value": "0"
+								},
+								{
+									"key": "precioMaximo",
+									"value": "99999999999999"
+								},
+								{
+									"key": "localidad",
+									"value": "Howebury"
 								}
 							]
 						}
@@ -82,18 +94,25 @@
 					"name": "Muestra un anuncio",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "valoracion",
+								"value": "5",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "http://localhost:3005/comprar/1/30",
+							"raw": "http://localhost:3000/comprar/1/7",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"comprar",
 								"1",
-								"30"
+								"7"
 							]
 						}
 					},
@@ -106,13 +125,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTQ4MTQzMiwiZXhwIjoxNjE0MDczNDMyfQ.EgJ_z7Mqhhh6Kmu_DxARqGCd2aDftWTXeytIuH3xPk8",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTY3NTU2MCwiZXhwIjoxNjE0MjY3NTYwfQ.9V6O6cid9vZfFBOP1wNaLD7EUE2EyU5RgqF7lu7pLUM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"fechaPublicacion\": \"2019-01-15T19:42:02.000Z\",\n  \"titulo\":  \"Juegos\",\n  \"descripcion\": \"Juegos de la NES. Los vendo por no utilizarlos.\",\n  \"precio\": \"10.50\",\n  \"provincia\": \"Lugo\",\n  \"localidad\": \"Xove\"\n}",
+							"raw": "{\n  \"fechaPublicacion\": \"2019-01-15T19:42:02.000Z\",\n  \"titulo\":  \"Juegos\",\n  \"descripcion\": \"Juegos de la NES. Los vendo por no utilizarlos.\",\n  \"precio\": \"10.50\",\n  \"provincia\": \"Lugo\",\n  \"localidad\": \"Xove\",\n  \"vendido\": \"false\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,15 +139,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/30",
+							"raw": "http://localhost:3000/mis-anuncios/32",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"mis-anuncios",
-								"30"
+								"32"
 							]
 						}
 					},
@@ -141,7 +160,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTQ4MDQyNSwiZXhwIjoxNjE0MDcyNDI1fQ.--zrMgL9gs0wLHcT7oepwpN2rgq7hxzxWXIDY6EChF4",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTY3NTU2MCwiZXhwIjoxNjE0MjY3NTYwfQ.9V6O6cid9vZfFBOP1wNaLD7EUE2EyU5RgqF7lu7pLUM",
 								"type": "text"
 							}
 						],
@@ -150,27 +169,27 @@
 							"formdata": [
 								{
 									"key": "titulo",
-									"value": "otro anuncio prueba",
+									"value": "otro anuncio",
 									"type": "text"
 								},
 								{
 									"key": "descripcion",
-									"value": "blablablablablablsdqwe2312",
+									"value": "anuncio 2",
 									"type": "text"
 								},
 								{
 									"key": "precio",
-									"value": "30",
+									"value": "100",
 									"type": "text"
 								},
 								{
 									"key": "provincia",
-									"value": "Pontevedra",
+									"value": "A Coruña ",
 									"type": "text"
 								},
 								{
 									"key": "localidad",
-									"value": "Vigo",
+									"value": "Laxe",
 									"type": "text"
 								},
 								{
@@ -209,12 +228,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/subir",
+							"raw": "http://localhost:3000/subir",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"subir"
 							]
@@ -234,15 +253,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/30",
+							"raw": "http://localhost:3000/mis-anuncios/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"mis-anuncios",
-								"30"
+								"3"
 							]
 						}
 					},
@@ -260,17 +279,17 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/31/imagenes/1",
+							"raw": "http://localhost:3000/mis-anuncios/34/imagenes/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"mis-anuncios",
-								"31",
+								"34",
 								"imagenes",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -294,19 +313,24 @@
 									"key": "foto\n",
 									"type": "file",
 									"src": "/home/guille/Descargas/foto-sm3.jpg"
+								},
+								{
+									"key": "foto2",
+									"type": "file",
+									"src": "/home/guille/Escritorio/hack-a-boss/Retro-Tech/fotos/consolas-videojuegos/atari/atari2600/Captura de pantalla de 2021-01-31 19-30-19.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3005/mis-anuncios/12/imagenes",
+							"raw": "http://localhost:3000/mis-anuncios/34/imagenes",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"mis-anuncios",
-								"12",
+								"34",
 								"imagenes"
 							],
 							"query": [
@@ -340,12 +364,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios",
+							"raw": "http://localhost:3000/usuarios",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios"
 							]
@@ -368,12 +392,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios/login",
+							"raw": "http://localhost:3000/usuarios/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
 								"login"
@@ -415,15 +439,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3005/usuarios/23",
+							"raw": "http://localhost:3000/usuarios/22",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
-								"23"
+								"22"
 							]
 						}
 					},
@@ -487,11 +511,11 @@
 								{
 									"key": "foto",
 									"type": "file",
-									"src": "/home/guille/Descargas/Evaristo_Páramos,_2007.jpg"
+									"src": "/home/guille/Escritorio/hack-a-boss/Retro-Tech/fotos/consolas-videojuegos/atari/atari2600/co_at_2600jr_u24_1.jpg"
 								},
 								{
 									"key": "ciudad",
-									"value": "Madrid",
+									"value": "A Coruña",
 									"type": "text"
 								},
 								{
@@ -511,18 +535,19 @@
 								},
 								{
 									"key": "email",
-									"value": "guillx.gv+2@gmail.com",
-									"type": "text"
+									"value": "guillx.gv@gmail.com",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios/22",
+							"raw": "http://localhost:3000/usuarios/22",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
 								"22"
@@ -552,12 +577,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios/22/contrasena",
+							"raw": "http://localhost:3000/usuarios/22/contrasena",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
 								"22",
@@ -582,12 +607,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios/recuperar-contrasena",
+							"raw": "http://localhost:3000/usuarios/recuperar-contrasena",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
 								"recuperar-contrasena"
@@ -603,7 +628,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"codigoRecuperacion\": \"1f476b5c5456da404b6863f8b63b8e04202f6cee\",\n    \"nuevaContraseña\": \"aversifuncionaya\"\n}",
+							"raw": "{\n    \"codigoRecuperacion\": \"ab0096a04510b3893b1d2c516c2e0f0a9549daca\",\n    \"nuevaContraseña\": \"aversifunciona\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -611,15 +636,251 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3005/usuarios/resetear-contrasena",
+							"raw": "http://localhost:3000/usuarios/resetear-contrasena",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3005",
+							"port": "3000",
 							"path": [
 								"usuarios",
 								"resetear-contrasena"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Mis Anuncios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTk1MTM1MSwiZXhwIjoxNjE0NTQzMzUxfQ.dgAM_-gkG1MHZAc_ZoyJWxPEiydPVHVz9qyWZqmWdQw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/mis-anuncios/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-anuncios",
+								"22"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compra_venta",
+			"item": [
+				{
+					"name": "Proponer Compra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTg3MzE1MCwiZXhwIjoxNjE0NDY1MTUwfQ.a0vsudSbBD9QBP_0a7WQlrluDox6ne3QeFUB0FR2MLI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mensajeCompra\": \"bajale al euro neno\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/comprar/1/34/proponer-compra",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprar",
+								"1",
+								"34",
+								"proponer-compra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Marcar Reservado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"lugarEntrega\": \"Miñones\",\n    \"horaEntrega\": \"2021-05-05 22:17:17\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/mis-anuncios/34/solicitudes/53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-anuncios",
+								"34",
+								"solicitudes",
+								"53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Marcar Vendido",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMTk1MTM1MSwiZXhwIjoxNjE0NTQzMzUxfQ.dgAM_-gkG1MHZAc_ZoyJWxPEiydPVHVz9qyWZqmWdQw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/mis-anuncios/34/53/vendido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-anuncios",
+								"34",
+								"53",
+								"vendido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Solicitud de Compra",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/mis-anuncios/52/solicitudes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-anuncios",
+								"52",
+								"solicitudes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Mis Reservas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMjEyMzQ3MywiZXhwIjoxNjE0NzE1NDczfQ.2BiZtpAGnAWIcuBeheEr_DHuj0Nm9eODr_gQ3HBvH5M",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/mis-reservas/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-reservas",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Solicitudes Compra",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMjEyMzQ3MywiZXhwIjoxNjE0NzE1NDczfQ.2BiZtpAGnAWIcuBeheEr_DHuj0Nm9eODr_gQ3HBvH5M",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/mis-solicitudes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mis-solicitudes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valorar Usuario Vendedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbCI6Im5vcm1hbCIsImlhdCI6MTYxMjEyMzQ3MywiZXhwIjoxNjE0NzE1NDczfQ.2BiZtpAGnAWIcuBeheEr_DHuj0Nm9eODr_gQ3HBvH5M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"valoracion\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/valoracion/22/53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"valoracion",
+								"22",
+								"53"
 							]
 						}
 					},

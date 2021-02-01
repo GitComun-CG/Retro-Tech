@@ -1,4 +1,4 @@
-// - GET - /mis-reservas/:idCompra
+// - GET - /mis-reservas/:idUsuario
 
 // SELECT idCompra, idAnuncio, horaEntrega, lugarEntrega FROM compra WHERE aceptada=true AND idUsuario=?
 
@@ -10,12 +10,16 @@ const listarMisReservas = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const { horaEntrega, lugarEntrega } = req.params;
+    const { idUsuario } = req.params;
 
     const [reservas] = await connection.query(
       `
-        SELECT idCompra, idAnuncio, horaEntrega, lugarEntrega FROM compra WHERE horaEntrega=? AND lugarEntrega=? AND aceptada=true`,
-      [horaEntrega, lugarEntrega]
+        SELECT compra.idCompra, compra.idAnuncio, compra.aceptada, compra.vendido, usuarios.userName  
+        FROM compra LEFT JOIN valoracionUsuario ON (valoracionUsuario.idCompra = compra.idCompra)
+        INNER JOIN anuncios ON (anuncios.idAnuncio = compra.idAnuncio) 
+        INNER JOIN usuarios ON (usuarios.idUsuario = anuncios.idUsuario) WHERE idUsuarioComprador=? 
+        AND valoracionUsuario.idValoracion IS NULL`,
+      [idUsuario]
     );
 
     if (reservas === 0) {

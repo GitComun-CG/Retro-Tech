@@ -24,17 +24,14 @@ const mostrarUsuario = async (req, res, next) => {
       pais: usuario[0].pais,
     };
 
-    console.log(usuario);
-    console.log(req.userAuth);
-
     // Si el usuario solicitado coincide con el del token, añadir a la respuesta básica los datos privados
     if (
       usuario[0].idUsuario === req.userAuth.id ||
       req.userAuth.role === "admin"
     ) {
-      infoUsuario.fechaRegistro = usuario[0].fechaRegristro;
-      infoUsuario.userName = usuario[0].userName;
-      (infoUsuario.nombre = usuario[0].nombre),
+      (infoUsuario.fechaRegistro = usuario[0].fechaRegistroS),
+        (infoUsuario.userName = usuario.userName),
+        (infoUsuario.nombre = usuario[0].nombre),
         (infoUsuario.apellidos = usuario[0].apellidos),
         (infoUsuario.foto = usuario[0].foto),
         (infoUsuario.ciudad = usuario[0].ciudad),

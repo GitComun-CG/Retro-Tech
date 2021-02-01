@@ -1,7 +1,9 @@
 // Para valorar compra  Insertar en la tabla valoracionesUsuario idCompra, idUsuario
 // Validar que la compra esta marcada como vendida si no no se permite validar al usuario
 // Comprobar que no existe una validacion de usuario para este idCompra
+// POST - /valoracion/:idUsuario/:idCompra
 const getDB = require("../../db");
+const { formatDateToDB } = require("../../helpers");
 
 const valorarCompra = async (req, res, next) => {
   let connection;
@@ -30,7 +32,7 @@ const valorarCompra = async (req, res, next) => {
       [idUsuarioVendedor]
     );
 
-    if (current[0].idUsuarioVendedor === req.userAuth.id) {
+    if (current[0] === req.userAuth.id) {
       const error = new Error("No puedes votarte a ti mismo");
       error.httpStatus = 403;
       throw error;
@@ -41,9 +43,9 @@ const valorarCompra = async (req, res, next) => {
       `
       SELECT idValoracion
       FROM valoracionUsuario
-      WHERE idUsuarioComprador=? AND idCompra=?
+      WHERE idCompra=?
     `,
-      [req.userAuth.id, idCompra]
+      [idCompra]
     );
 
     if (existeValoracion.length > 0) {
@@ -55,28 +57,19 @@ const valorarCompra = async (req, res, next) => {
     const now = new Date();
 
     // Añado el voto a la tabla
-    await connection.query(
+    const [voto] = await connection.query(
       `
-      INSERT INTO valoracionUsuario(fechaValoracion, valoracion, idUsuarioVendedor)
-      VALUES(?,?,?)
+      INSERT INTO valoracionUsuario(fechaValoracion, idCompra, valoracion, idUsuarioVendedor)
+      VALUES(?,?,?,?)
     `,
-      [now, valoracion, req.userAuth.id]
-    );
-
-    // Saco la nueva media de votos
-    const [nuevoVoto] = await connection.query(
-      `
-      SELECT AVG(valoracionUsuario.valoracion) AS valoracion
-      FROM usuarios LEFT JOIN valoracionUsuario ON (usuario.idUsuario = valoracionUsuario.idUsuario)
-      WHERE valoracionUsuario.idUsuarioVendedor = ?
-    `,
-      [idUsuarioVendedor]
+      [formatDateToDB(now), idCompra, valoracion, req.userAuth.id]
     );
 
     res.send({
       status: "ok",
       data: {
-        votes: nuevoVoto[0].valoracion,
+        votes: voto.insertedId,
+        valoracion: valoracion,
       },
     });
   } catch (error) {

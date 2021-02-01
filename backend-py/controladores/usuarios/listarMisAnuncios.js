@@ -13,7 +13,6 @@ const listarMisAnuncios = async (req, res, next) => {
 
     const [anuncios] = await connection.query(
       `SELECT  * FROM anuncios
-      INNER JOIN usuarios ON (anuncios.idUsuario = anuncios.idUsuario)
        WHERE anuncios.idUsuario=? AND anuncios.vendido = false;`,
       [idUsuario]
     );

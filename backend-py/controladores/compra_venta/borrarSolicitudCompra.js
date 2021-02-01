@@ -2,7 +2,7 @@
 
 // V - Crear un middleware de existeCompra y ponerlo a marcarReservado, marcarVendido, valorarCompra, borrarSolicitudCompra
 
-// - DELETE - /mis-anuncios/:idAnuncio/solicitudes
+// - DELETE - /mis-anuncios/:idCompra/solicitudes
 
 const getDB = require("../../db");
 
@@ -12,26 +12,29 @@ const borrarSolicitudCompra = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const { idCompra, idUsuarioComprador, idAnuncio } = req.params;
+    const { idCompra } = req.params;
 
-    const [solicitud] = await connection.query(
+    const [result] = await connection.query(
       `
-        SELECT idCompra FROM compra WHERE idUsuarioComprador=? AND idAnuncio=?
-        `,
-      [idUsuarioComprador, idAnuncio]
+      SELECT * FROM compra WHERE idCompra=?`,
+      [idCompra]
     );
-    if (solicitud === 1) {
-      await connection.query(
-        `
-            DELETE FROM compra WHERE idCompra=? AND idAnuncio=? AND idUsuarioComprador=?`,
-        [idCompra, idAnuncio, idUsuarioComprador]
-      );
 
-      res.send({
-        status: "ok",
-        message: "La solicitud ha sido borrada.",
-      });
+    if (result[0].vendido === 1) {
+      const error = new Error("El producto ya ha sido vendido.");
+      throw error;
     }
+
+    await connection.query(
+      `
+        DELETE FROM compra WHERE idCompra=?`,
+      [idCompra]
+    );
+
+    res.send({
+      status: "ok",
+      message: `La solicitud de compra con id ${idCompra} ha sido borrada.`,
+    });
   } catch (error) {
     next(error);
   } finally {

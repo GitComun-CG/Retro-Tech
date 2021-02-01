@@ -12,30 +12,34 @@ const listarAnuncios = async (req, res, next) => {
     // 🆘️ DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero funcionar, FUNCIONA!)
     const { idCategoria } = req.params;
 
-    const { search } = req.query;
+    const { search, precioMinimo, precioMaximo, localidad } = req.query;
 
     let results;
 
     // 🆘️ Esto es para buscar con el buscador. Si buscas una palabra, lista los anuncios que contienen esa palabra en el título o la descripción. Ha funcionado a la primera sin dar error asi que seguramente esté mal.
-    if (search) {
+    if (search || precioMinimo || precioMaximo || localidad) {
       [results] = await connection.query(
         `
         SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
         INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
-        WHERE anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ? AND anuncios.vendido = false;`,
-        [`%${search}%`, `%${search}%`]
+        WHERE (anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ?) AND anuncios.precio >= ? AND anuncios.precio <= ? AND anuncios.localidad LIKE ? AND anuncios.vendido = false;`,
+        [
+          `%${search}%`,
+          `%${search}%`,
+          `${precioMinimo}`,
+          `${precioMaximo}`,
+          `%${localidad}%`,
+        ]
       );
     } else {
       [results] = await connection.query(
         `
         SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.foto, anuncios.idUsuario FROM anuncios
-        INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
          WHERE anuncios.idCategoria = ? AND anuncios.vendido = false;`,
         [idCategoria]
       );
     }
 
-    // 🆘️ Esto es para lanzar un error si no existe la categoría, pero no funciona. Si const anunciosFiltrados lo pongo como [anunciosFiltrados] salta mensaje de error pero no el 404. Si lo pongo sin [] me da un 200
     const anunciosFiltrados = results;
 
     if (anunciosFiltrados.idCategoria === null) {

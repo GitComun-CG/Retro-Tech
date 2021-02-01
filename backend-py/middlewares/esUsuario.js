@@ -37,7 +37,7 @@ const esUsuario = async (req, res, next) => {
     );
 
     // Cambiar el formato de fecha de cambio de email o contraseña:
-    const ultimaActualizacion = new Date(result[0].ultimaActualizacion);
+    const ultimaActualizacion = new Date(result[0]);
 
     const fechaEmisionToken = new Date(tokenInfo.iat * 1000);
     // Si el token fue emitido antes de la fecha de la nueva actualización, da error (habría que volver a logearse con el nuevo email o contraseña)
@@ -49,8 +49,6 @@ const esUsuario = async (req, res, next) => {
 
     // Inyectar en la request la información del token:
     req.userAuth = tokenInfo;
-
-    console.log(tokenInfo);
 
     next();
   } catch (error) {

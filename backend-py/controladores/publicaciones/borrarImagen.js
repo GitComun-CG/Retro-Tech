@@ -1,6 +1,6 @@
 // SCRIPT PARA BORRAR IMÁGENES DE UN ANUNCIO:
 // - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idFotoAnuncio
-// 🆘️🆘️🆘️ LE DOY A BORRAR UNA FOTO QUE EXISTE Y ME DICE QUE LA FOTO NO EXISTE.
+
 const getDB = require("../../db");
 const { borrarImagen } = require("../../helpers");
 

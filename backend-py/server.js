@@ -42,6 +42,10 @@ const {
   proponerCompra,
   marcarReservado,
   marcarVendido,
+  borrarSolicitudCompra,
+  listarMisReservas,
+  listarSolicitudesCompra,
+  valorarCompra,
 } = require("./controladores/compra_venta");
 
 // Middlewares:
@@ -75,14 +79,14 @@ app.get("/comprar", listarCategorias);
 // 👍️ GET - /comprar/:idCategoria  : devuelve los anuncios relacionados con una categoría
 app.get("/comprar/:idCategoria", listarAnuncios);
 
-// 👍️ GET - comprar/:idCategoria/:idAnuncio : muestra un anuncio
+// 👍️ GET - /comprar/:idCategoria/:idAnuncio : muestra un anuncio
 app.get("/comprar/:idCategoria/:idAnuncio", elAnuncioExiste, mostrarAnuncio);
 
 // 👍️ POST - /subir  : para crear un anuncio (TOKEN)
 app.post("/subir", esUsuario, crearAnuncio);
 
-// listar mis anuncios - GET - /mis-anuncios/:idAnuncio
-app.get("/mis-anuncios/:idUsuario");
+// 👍️ listar mis anuncios - GET - /mis-anuncios/:idAnuncio
+app.get("/mis-anuncios/:idUsuario", esUsuario, listarMisAnuncios);
 
 // 👍️ PUT - /mis-anuncios/:idAnuncio : para editar un anuncio (TOKEN)
 app.put(
@@ -102,9 +106,7 @@ app.delete(
   borrarAnuncio
 );
 
-// ⭕️ Guardar anuncios (?)
-
-// 🆘️ - POST - /mis-anuncios/:idAnuncio/imagenes: para subir una foto a un anuncio (TOKEN)
+// 👍️ - POST - /mis-anuncios/:idAnuncio/imagenes: para subir una foto a un anuncio (TOKEN)
 app.post(
   "/mis-anuncios/:idAnuncio/imagenes",
   esUsuario,
@@ -113,9 +115,9 @@ app.post(
   añadirImagen
 );
 
-// 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idImagen: para eliminar una foto de un anuncio (TOKEN)
+// 👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idFotoAnuncio: para eliminar una foto de un anuncio (TOKEN)
 app.delete(
-  "/mis-anuncios/:idAnuncio/imagenes/:idImagen",
+  "/mis-anuncios/:idAnuncio/imagenes/:idFotoAnuncio",
   esUsuario,
   elAnuncioExiste,
   puedeEditar,
@@ -160,9 +162,6 @@ app.post("/usuarios/recuperar-contrasena", recuperarContrasena);
 // 👍️ - POST - /usuarios/resetear-contrasena   --->  cambiar la contraseña de usuario
 app.post("/usuarios/resetear-contrasena", resetearContrasena);
 
-// listarMisAnuncios
-app.get("/mis-anuncios", esUsuario, listarMisAnuncios);
-
 // _________________________________________________________________________________________________________________________ //
 
 /*
@@ -190,8 +189,26 @@ app.put(
   marcarVendido
 );
 
-// borrar solicitud de reserva
-app.delete("/mis-anuncios/:idAnuncio/:idCompra/solicitudes");
+// borrar solicitud de compra
+app.delete(
+  "/mis-anuncios/:idCompra/solicitudes",
+  existeCompra,
+  borrarSolicitudCompra
+);
+
+// listar mis reservas
+app.get("/mis-reservas/:idUsuario", esUsuario, listarMisReservas);
+
+// listar solicitudes compra
+app.get("/mis-solicitudes/:idUsuario", esUsuario, listarSolicitudesCompra);
+
+// valorar compra
+app.post(
+  "/valoracion/:idUsuario/:idCompra",
+  existeCompra,
+  esUsuario,
+  valorarCompra
+);
 
 // Crear middlewar de error:
 app.use((error, req, res, next) => {

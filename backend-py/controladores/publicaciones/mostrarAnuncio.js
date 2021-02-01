@@ -1,8 +1,6 @@
 //  SCRIPT PARA MOSTRAR UN ANUNCIO CON TODA SU INFORMACIÓN
 // - GET - /comprar/:idCategoria/:idAnuncio
 
-// 🆘️ Funciona pero mal. Al poner en Postman http://localhost:3002/comprar/2/10 (por ejemplo) me lista sólo el anuncio con idAnuncio = 10, pero pasa olímpicamente de la categoría :(
-// 🆘️ Tampoco muestra las fotos de ese anuncio en la lista de anuncios.
 const getDB = require("../../db");
 
 const mostrarAnuncio = async (req, res, next) => {
@@ -15,11 +13,19 @@ const mostrarAnuncio = async (req, res, next) => {
 
     const [result] = await connection.query(
       `
-        SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario 
-        FROM anuncios LEFT JOIN categorias ON (anuncios.idAnuncio = categorias.idCategoria)
-        WHERE anuncios.idAnuncio = ?;`,
+        SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario, usuarios.userName 
+        FROM anuncios INNER JOIN usuarios ON (usuarios.idUsuario = anuncios.idUsuario)
+        WHERE anuncios.idAnuncio=? AND anuncios.idCategoria=?;`,
       [idAnuncio, idCategoria]
     );
+
+    if (result.length === 0) {
+      const error = new Error(
+        "El anuncio no existe para la categoría indicada."
+      );
+      error.httpStatus = 404;
+      throw error;
+    }
 
     const single = result;
 
@@ -30,9 +36,19 @@ const mostrarAnuncio = async (req, res, next) => {
       [idAnuncio]
     );
 
+    // Saco la nueva media de votos
+    const [puntuacionVendedor] = await connection.query(
+      `
+      SELECT AVG(valoracionUsuario.valoracion) AS valoracion
+      FROM valoracionUsuario 
+      WHERE valoracionUsuario.idUsuarioVendedor=?
+    `,
+      [result[0].idUsuario]
+    );
+
     res.send({
       status: "ok",
-      data: { ...single, fotos },
+      data: { ...single, fotos, puntuacionVendedor },
     });
   } catch (error) {
     next(error);

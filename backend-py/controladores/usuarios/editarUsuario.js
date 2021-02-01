@@ -1,11 +1,12 @@
 // SCRIPT PARA EDITAR UN USUARIO
-// 🆘️🆘️🆘️ Me da un error con la UNIQUE de userName y email. No entiendo por qué :(     El email si lo manda y también sube la foto.
 
 const getDB = require("../../db");
+
 const {
   guardarImagen,
   generarCadenaAleatoria,
   enviarEmail,
+  formatDateToDB,
 } = require("../../helpers");
 
 const editarUsuario = async (req, res, next) => {
@@ -72,26 +73,9 @@ const editarUsuario = async (req, res, next) => {
         throw error;
       }
 
-      // 🆘️ ¿Sería algo así para el fallo del userName?
-      // if (userName && userName !== currentUser[0].userName) {
-      //   const [elUserNameExiste] = await connection.query(
-      //     `
-      //         SELECT idUsuario FROM usuarios WHERE userName=?`,
-      //     [userName]
-      //   );
-
-      //   if (elUserNameExiste.length > 0) {
-      //     const error = new Error(
-      //       "Ya existe una cuenta con ese nombre de usuario."
-      //     );
-      //     error.httpStatus = 409;
-      //     throw error;
-      //   }
-      // }
-
       // Crear código de registro para hacer la validación:
       const codigoRegistro = generarCadenaAleatoria(40);
-
+      const now = new Date();
       // Mandar un email al usuario con el link de confirmación del email
       const emailBody = `
         Acabas de modificar tu email en RetroTech. 
@@ -106,7 +90,7 @@ const editarUsuario = async (req, res, next) => {
       // Actualizar los datos finales
       await connection.query(
         `
-        UPDATE usuarios SET userName=?, nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=?, email=?, active=0, codigoRegistro=?, ultimaActualizacion=?`,
+        UPDATE usuarios SET userName=?, nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=?, email=?, active=0, codigoRegistro=?, ultimaActualizacion=? WHERE idUsuario=?`,
         [
           userName,
           nombre,
@@ -117,8 +101,8 @@ const editarUsuario = async (req, res, next) => {
           fechaNacimiento,
           email,
           codigoRegistro,
+          formatDateToDB(now),
           idUsuario,
-          new Date(),
         ]
       );
       // Dar una respuesta si cambia el email:
@@ -131,7 +115,7 @@ const editarUsuario = async (req, res, next) => {
     } else {
       await connection.query(
         `
-            UPDATE usuarios SET nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=? WHERE idAnuncio=?`,
+            UPDATE usuarios SET nombre=?, apellidos=?, ciudad=?, pais=?, codigoPostal=?, fechaNacimiento=? WHERE idUsuario=?`,
         [
           nombre,
           apellidos,
