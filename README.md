@@ -2,6 +2,6 @@ PROYECTO FINAL BOOTCAMP
 
 Plataforma de compra / venta de tecnología retro
 
-Christian Dobao
+                                 Christian Dobao
 
-Guillermo Gil
+                                 Guillermo Gil
