@@ -3,7 +3,7 @@
 require("dotenv").config();
 
 const express = require("express");
-
+const cors = require("cors");
 const morgan = require("morgan");
 
 const bodyParser = require("body-parser");
@@ -59,6 +59,9 @@ const { PORT } = process.env;
 
 // Crear la app de express:
 const app = express();
+
+// Cors para el Front:
+app.use(cors());
 
 // Logger:
 app.use(morgan("dev"));

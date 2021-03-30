@@ -48,7 +48,7 @@ const mostrarAnuncio = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      data: { ...single, fotos, puntuacionVendedor },
+      data: [ ...single, fotos, puntuacionVendedor] ,
     });
   } catch (error) {
     next(error);

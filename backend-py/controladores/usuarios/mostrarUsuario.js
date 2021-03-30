@@ -29,8 +29,8 @@ const mostrarUsuario = async (req, res, next) => {
       usuario[0].idUsuario === req.userAuth.id ||
       req.userAuth.role === "admin"
     ) {
-      (infoUsuario.fechaRegistro = usuario[0].fechaRegistroS),
-        (infoUsuario.userName = usuario.userName),
+      (infoUsuario.fechaRegistro = usuario[0].fechaRegistro),
+        (infoUsuario.userName = usuario[0].userName),
         (infoUsuario.nombre = usuario[0].nombre),
         (infoUsuario.apellidos = usuario[0].apellidos),
         (infoUsuario.foto = usuario[0].foto),

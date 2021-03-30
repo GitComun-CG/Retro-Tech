@@ -95,11 +95,13 @@ const crearUsuario = async (req, res, next) => {
       ]
     );
     // Mandar una respuesta
-    res.send({
+    res.send([
+      {
       status: "ok",
       message:
         "El usuario ha sido registrado. En breves recibirás un correo electrónico para validar tu cuenta.",
-    });
+    }
+  ]);
   } catch (error) {
     next(error);
   } finally {

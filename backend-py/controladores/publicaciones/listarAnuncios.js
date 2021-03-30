@@ -71,7 +71,7 @@ const listarAnuncios = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      data: { ...anunciosFiltrados, resultadoConFotos },
+      data: [...anunciosFiltrados, resultadoConFotos],
     });
   } catch (error) {
     next(error);

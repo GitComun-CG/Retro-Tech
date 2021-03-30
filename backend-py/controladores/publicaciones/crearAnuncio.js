@@ -3,7 +3,7 @@
 
 const getDB = require("../../db");
 const { formatDateToDB, guardarImagen } = require("../../helpers");
-const { random } = require("lodash");
+// const { random } = require("lodash");
 
 const crearAnuncio = async (req, res, next) => {
   let connection;
@@ -11,10 +11,24 @@ const crearAnuncio = async (req, res, next) => {
   try {
     connection = await getDB();
 
-    const { titulo, descripcion, precio, provincia, localidad } = req.body;
+    const {
+      titulo,
+      descripcion,
+      precio,
+      provincia,
+      localidad,
+      idCategoria,
+    } = req.body;
 
     // Si alguno de los campos obligatorios no existe, lanza error:
-    if (!titulo || !descripcion || !precio || !provincia || !localidad) {
+    if (
+      !titulo ||
+      !descripcion ||
+      !precio ||
+      !provincia ||
+      !localidad ||
+      !idCategoria
+    ) {
       const error = new Error("Faltan campos por cubrir.");
       error.httpStatus = 400;
       throw error;
@@ -22,7 +36,6 @@ const crearAnuncio = async (req, res, next) => {
 
     const now = new Date();
 
-    const idCategoria = random(1, 5);
     // Para comprobar el token del usuario que crea el anuncio.
     const idUsuario = req.userAuth.id;
 
