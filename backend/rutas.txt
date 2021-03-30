@@ -1,0 +1,227 @@
+
+-------------------------------------------- RUTAS -----------------------------------------------------
+
+ >>>>>>>>>>>> PUBLICACIONES:
+
+        V👍️👍👍 - GET - /comprar   (listarCategorias.js)                                                                                                     
+                lista con todas las categorías  
+
+
+
+        V👍👍👍 - GET - /comprar/:idCategoria   (listarAnuncios.js)                                                                                      
+                lista con los anuncios dentro de una categoría en concreto
+
+
+
+        V👍️👍👍 - GET - /comprar/:idCategoria/:idAnuncio   (mostrarAnuncio.js)                                                                             
+                muestra un anuncio seleccionado
+
+
+
+>>>>>>>>>>>> PUBLICACIONES CON REGISTRO OBLIGATORIO
+
+        V👍️👍👍 - POST - /subir   (crearAnuncio.js)                                                                                                         
+                crea un anuncio con fotos y todos los campos      ----------    👍️  CON TOKEN 
+
+
+
+        V👍️👍️👍️ - GET - /mis-anuncios/:idUsuario       (listarMisAnuncios.js)
+                lista los anuncios subidos por el usuario     
+
+
+
+        V👍️👍️👍️ - PUT -  /mis-anuncios/:idAnuncio   (editarAnuncio.js)                                                                                     
+                edita un anuncio               ------------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO     
+
+
+                 
+        V👍️👍️👍️ - DELETE - /mis-anuncios/:idAnuncio   (borrarAnuncio.js)                                                                                     
+                borra un anuncio y su contenido (fotos, etc)         ---------    👍️   CON TOKEN Y COMPROBACIÓN DE USUARIO (o admin)                                            
+
+
+
+        V👍️👍👍 - POST - /mis-anuncio/:idAnuncio/imagenes   (añadirImagen.js)                                                                             
+                añadir una imagen a un anuncio          -----------    👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO
+
+
+
+        V👍️👍️👍️ - DELETE - /mis-anuncios/:idAnuncio/imagenes/:idFotoAnuncio   (borrarImagen.js)                                                           
+                borrar una imagen de un anuncio           ---------------- 👍️  CON TOKEN Y COMPROBACIÓN DE USUARIO   
+
+
+
+
+ >>>>>>>>>>>> USUARIOS:
+
+        V👍️👍️👍️ - POST - /usuarios                                                                                                                    
+                crear un usuario pendiente de activar  
+
+
+
+        V👍️👍️👍️ - GET - /usuarios/validar/:codigoRegistro                                                                                              
+                validar un usuario recién registrado    
+
+
+
+        V👍️👍️👍️ - POST - /usuarios/login                                                                                                                
+                iniciar la sesión de un usuario y devolver el token
+
+
+
+        X👍️👍️👍️ - GET - /usuarios/:idUsuario                                                                                                             
+                mostrar el perfil de un usuario con información básica. Si quien busca el perfil es el dueño, muestra más info. --------- CON TOKEN
+
+
+
+        👍️👍️👍️ - DELETE - /usuarios/:idUsuario                                                                                                         
+                borra un usuario.       ----------  solo lo puede hacer el dueño del perfil o el admin
+
+
+
+        V👍️👍️👍️ - PUT - /usuarios/:idUsuario                                                                                                           
+                editar el perfil        ----------  solo el dueño del perfil                                                                            
+ 
+
+
+        V👍️👍️👍️ - PUT - /usuarios/:idUsuario/constrasena                                                                                             
+                editar contraseña del usuario    ----------  solo el dueño del perfil 
+
+
+
+        V👍️👍️👍️ - POST - /usuarios/recuperar-constrasena  
+                enviar un correo con el código de reseteo de contraseña a un email
+
+                     PROCESO PARA RECUPERAR CONTRASEÑA OLVIDADA:
+
+                - Enviar al mail del usuario un código para la recuperación.
+                - Usar ese código para cambiar la contraseña sin acceder previamente.
+
+
+
+>>>>>>>>>>>> COMPRA_VENTA:
+
+        V👍️👍️👍️ - DELETE - /mis-anuncios/:idAnuncio/solicitudes           (borrarSolicitudCompra.js)
+                cancelar una solicitud de reserva para realizar una compra
+
+
+
+        X👍️👍️👍️ - PUT - /comprar/:idCategoria/:idAnuncio/proponer-compra          (proponerCompra.js)
+                manda una solicitud de reserva a un anuncio
+
+
+
+        V👍️👍️👍️ - GET - /mis-reservas/:idCompra         (listarMisReservas.js)
+                lista las reservas solicitadas y aceptadas por el usuario vendedor
+
+
+
+        V👍️👍️👍️ - GET - /mis-solicitudes/:idUsuario           (listarSolicitudesCompra.js)
+                lista las solicitudes de reserva que otros usuarios realizan a tus anuncios 
+
+        
+
+        V👍️👍️👍️ - PUT - /mis-anuncios/:idAnuncio/solicitudes/:idCompra        (marcarReservado.js)
+                acepta una solicitud de compra de uno de tus anuncios y lo reserva
+
+
+
+        V👍️👍️👍️ - PUT - /mis-anuncios/:idAnuncio/:idCompra/vendido       (marcarVendido.js)
+                marca como vendido un anuncio (previamente reservado)
+                     
+
+
+        V👍️👍️👍️ - POST - /valoracion/:idUsuario/:idCompra      (valorarCompra.js)
+                valora a un usuario después de realizar una compra (de 1 a 5 puntos)     
+
+                  
+
+        
+                  
+                  
+        
+        
+        👍️ middleware existeCompra
+
+
+
+
+const getDB = require("../../db");
+
+const listarAnuncios = async (req, res, next) => {
+  let connection;
+
+  try {
+    connection = await getDB();
+
+    // 🆘️ DESPUÉS DE 50 millones de intentos creo que funciona: La intención es que se muestren todos los anuncios que pertenecen a una categoria (idCategoria) y ahora lo hace. Si en Postman pones http://localhost:3000/comprar/3, muestra todos los anuncios con idCategoria 3, que es "Teléfonos". De todas formas: PREGUNTAR SI SE HACE ASÍ PORQUE LO DUDO MUCHO (pero funcionar, FUNCIONA!)
+    const { idCategoria } = req.params;
+
+    const { search, precioMinimo, precioMaximo, localidad } = req.query;
+
+    let results;
+
+    // 🆘️ Esto es para buscar con el buscador. Si buscas una palabra, lista los anuncios que contienen esa palabra en el título o la descripción. Ha funcionado a la primera sin dar error asi que seguramente esté mal.
+    if (search || precioMinimo || precioMaximo || localidad) {
+      [results] = await connection.query(
+        `
+        SELECT anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.idUsuario FROM anuncios
+        INNER JOIN categorias ON (anuncios.idCategoria = anuncios.idCategoria)
+        WHERE (anuncios.titulo LIKE ? OR anuncios.descripcion LIKE ?) AND anuncios.precio >= ? AND anuncios.precio <= ? AND anuncios.localidad LIKE ? AND anuncios.vendido = false;`,
+        [
+          `%${search}%`,
+          `%${search}%`,
+          `${precioMinimo}`,
+          `${precioMaximo}`,
+          `%${localidad}%`,
+        ]
+      );
+    } else {
+      [results] = await connection.query(
+        `
+        SELECT  anuncios.idAnuncio, anuncios.fechaPublicacion, anuncios.titulo, anuncios.descripcion, anuncios.precio, anuncios.provincia, anuncios.localidad, anuncios.idCategoria, anuncios.foto, anuncios.idUsuario FROM anuncios
+         WHERE anuncios.idCategoria = ? AND anuncios.vendido = false;`,
+        [idCategoria]
+      );
+    }
+
+    const anunciosFiltrados = results;
+
+    if (anunciosFiltrados.idCategoria === null) {
+      // Si no existe el idCategoria, lanza un error 404
+      const error = new Error("Lo siento, la categoría no existe.");
+      error.httpStatus = 404;
+      throw error;
+    }
+
+    let resultadoConFotos = [];
+
+    if (results.legth > 0) {
+      const ids = results.map((result) => result.id);
+
+      const [fotos] = await connection.query(`
+        SELECT * FROM fotos_anuncio WHERE idAnuncio IN (${ids.join(",")})`);
+
+      resultadoConFotos = results.map((result) => {
+        const fotoResultado = fotos.filter(
+          (foto) => foto.idAnuncio === result.idFotoAnuncio
+        );
+
+        return {
+          ...result,
+          fotos: fotoResultado,
+        };
+      });
+    }
+
+    res.send({
+      status: "ok",
+      data: [...anunciosFiltrados, resultadoConFotos],
+    });
+  } catch (error) {
+    next(error);
+  } finally {
+    if (connection) connection.release();
+  }
+};
+
+module.exports = listarAnuncios;
